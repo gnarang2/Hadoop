@@ -97,9 +97,11 @@ public class DataNodeTask {
             Integer currId = ID.next();
             ArrayList<String> temp = taskDivisions.get(currId);
             while(true){
+                System.out.println("Doing task :" + Integer.toString(currId));
                 try {
                     ps = new ProcessBuilder("java", "-jar", this.executable, this.inputFileName, this.outputFileName, this.machineNumber, temp.get(0), temp.get(1)).start();
                     ps.waitFor();
+                    System.out.println(ps.exitValue());
                     temp.set(2, "1");
                 } catch (Exception e) {
                     continue;
