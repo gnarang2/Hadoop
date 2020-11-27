@@ -279,69 +279,6 @@ public class DataNode {
                 return reply;
                 // }
             }
-            // case Commands.CD_WRITE_FILE:{
-            //     String ack;
-            //     String fileName = operation[1];
-            //     byte[] fileInfo = DistributedFileSystem.getFileInfo(fileName); // consists of FILE_SIZE | UPDATE_COUNT
-            //     if(fileInfo == null){
-            //         output.write(Commands.FILE_NOT_PRESENT.getBytes());
-            //         reply = constructMasterMessage(Commands.DM_UNKNOWN_ERROR, Commands.FILE_NOT_PRESENT, fileName, Commands.DELETE);
-            //         return reply;   
-            //     }
-            //     output.write(fileInfo); 
-            //     int n = input.read(fileInfo);
-            //     ack = new String(fileInfo).substring(0,n);
-            //     if(ack == "OK"){
-            //         DistributedFileSystem.markWriteBusy(fileName);
-            //         byte[] fileData = new byte[Messenger.MAX_MESSAGE_SIZE];
-            //         long fileSize = DistributedFileSystem.getFileSize(fileName); // return fileSize
-            //         long offset = 0;
-            //         fileData = DistributedFileSystem.getFileData(fileName, (int)offset); // returns fileData of size MAX_MESSAGE from offset
-            //         while(fileData != null){
-            //             output.write(fileData, (int)offset, Math.min(Messenger.MAX_MESSAGE_SIZE, (int)(fileSize - offset)));
-            //             offset += Messenger.MAX_MESSAGE_SIZE;
-            //             fileData = DistributedFileSystem.getFileData(fileName, (int)offset);
-            //         }
-            //     }
-
-            //     String fileSize;
-            //     String[] message;
-            //     Integer bytesRead = 0;
-            //     byte[] contents = new byte[1024];
-            //     n = input.read(fileInfo);
-            //     fileSize = new String(fileInfo).substring(0,n);
-            //     if(fileSize.toUpperCase() == Commands.CANCEL){
-            //         DistributedFileSystem.unmarkwriteBusy(fileName);
-            //         reply = constructMasterMessage(Commands.DM_UNKNOWN_ERROR, Commands.CANCEL, fileName, Commands.READABLE);
-            //         return reply;
-            //     }
-                                
-            //     message = fileSize.split("|");
-            //     fileSize = message[0];
-            //     output.write(Commands.OK.getBytes());
-            //     Integer size = Integer.parseInt(new String(fileSize));
-                
-            //     byte[] fileShard = new byte[Messenger.MAX_MESSAGE_SIZE];
-            //     ByteArrayOutputStream bytesStream = new ByteArrayOutputStream();
-            //     while(bytesRead <= size){
-            //         input.readNBytes(fileShard, bytesRead, Messenger.MAX_MESSAGE_SIZE);
-            //         // input timeouts are important here. unmarkWrite is also important here.
-            //         bytesStream.write(fileShard);
-            //         bytesRead += Messenger.MAX_MESSAGE_SIZE;
-            //     }
-            //     contents = bytesStream.toByteArray();
-            //     Integer updateCount = DistributedFileSystem.getCount(fileName) + 1;
-            //     // if(contents.length != size){
-            //     //     output.write(Commands.OPERATION_FAILED.getBytes());
-            //     //     reply = constructMasterMessage(Commands.DM_UNKNOWN_ERROR, Commands.OPERATION_FAILED, fileName, Commands.DELETE_ALL);
-            //     //     return reply;
-            //     // } else {
-            //     DistributedFileSystem.updateFile(fileName, contents, updateCount);
-            //     output.write(Commands.OK.getBytes());
-            //     reply = constructMasterMessage(Commands.DM_ACK_WRITE_FILE, Commands.OK, fileName, Commands.READABLE);
-            //     return reply;
-                
-            // }
             case Commands.CD_DELETE_FILE:{ // Returns empty String
                 DistributedFileSystem.deleteFile(fileName);
                 output.write(Commands.OK.getBytes());

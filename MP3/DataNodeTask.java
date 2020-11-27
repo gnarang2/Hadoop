@@ -81,9 +81,13 @@ public class DataNodeTask {
         }
 
         public void execute() {
-            while(true){
-                System.out.println("Execute being called....\n");
+            for(Integer i: taskDivisions.keySet()){
+                System.out.println(taskDivisions.get(i));
             }
+            
+            // while(true){
+            //     System.out.println("Execute being called....\n");
+            // }
             // Process ps;
             // Iterator<Integer> ID = taskDivisions.keySet().iterator();
             // Integer currId = ID.next();
