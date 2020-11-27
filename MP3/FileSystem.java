@@ -179,7 +179,7 @@ public class FileSystem {
         
         FileInputStream fis;
         BufferedInputStream bis;
-        File file = new File(getExecutablePath(fileName));
+        File file = new File(path + fileName);
         try {
             fis = new FileInputStream(file);
             bis = new BufferedInputStream(fis);
