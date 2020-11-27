@@ -66,6 +66,10 @@ public class FileOperations {
                 return new String[0];
             }
             if(n == -1){
+                if(var.length() > 0){
+                    data[currentLines] = var;
+                    currentLines += 1;
+                }
                 break;
             }
             this.currentPointer += 1L;
