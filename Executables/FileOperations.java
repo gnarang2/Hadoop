@@ -82,7 +82,6 @@ public class FileOperations {
                 length -= 1;
                 continue;
             }
-            System.out.println(var);
             var += currentChar;
         }
 
