@@ -31,19 +31,9 @@ public class DataNodeTask {
         HashMap<Integer, ArrayList<String>> taskDivisions = new HashMap<>();
         
         public DataNodeMapplePreTask(String inputFileName, String outputFileName, String executable, String[] taskString) {
-            System.out.println("Object declaration");
-            System.out.println("File Names:");
-            
             this.inputFileName = inputFileName;
             this.outputFileName = outputFileName;
             this.executable = executable;
-
-            System.out.println(this.inputFileName);
-            System.out.println(this.outputFileName);
-            System.out.println(this.executable);
-            for(String off: taskString){
-                System.out.println("Offset is: " + off);
-            }
 
             for(int i = 0; i < taskString.length; i+=3){
                 ArrayList<String> temp = new ArrayList<>();
@@ -120,7 +110,6 @@ public class DataNodeTask {
         }
 
         public String checkCompletion() {
-            System.out.println("Function called");
             String response = new String();
             for(Integer i: taskDivisions.keySet()){
                 ArrayList<String> temp = taskDivisions.get(i);
@@ -266,8 +255,8 @@ public class DataNodeTask {
         this.input = inputFileName;
 
         if(checkTaskType(executable)){
-            task = new DataNodeMapplePreTask(inputFileName, outputFileName, executable, taskString);
-            TaskThread ft = new TaskThread(task);
+            this.task = new DataNodeMapplePreTask(inputFileName, outputFileName, executable, taskString);
+            TaskThread ft = new TaskThread(this.task);
             ft.start();
         } 
         // else {

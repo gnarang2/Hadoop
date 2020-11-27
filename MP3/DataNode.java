@@ -65,15 +65,6 @@ public class DataNode {
                 String executable = message[3];
                 String[] taskString = Arrays.copyOfRange(message, 4, message.length);
                 // if(currentTask == null){
-                System.out.println("Object declaration");
-                System.out.println("File Names:");                
-                System.out.println(inputFileName);
-                System.out.println(outputFileName);
-                System.out.println(executable);
-                for(String off: taskString){
-                    System.out.println("Offset is: " + off);
-                }
-        
                 currentTask = new DataNodeTask(inputFileName, outputFileName, executable, taskString);
                 // } else {
                 //     currentTask.introduce(taskString);
