@@ -145,10 +145,9 @@ public class MappleTask extends Task{
         if(partitions.size() > 0){
             return partitions;
         }
-        String[] temp = this.offsetString.split(".");
+        String[] temp = this.offsetString.split(":");
         for(String off: temp){
             partitions.add(Long.valueOf(off));
-            System.out.println(off);
         }
         return partitions;
     }
