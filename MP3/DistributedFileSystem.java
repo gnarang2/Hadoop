@@ -88,7 +88,7 @@ public class DistributedFileSystem {
     }
 
     public static boolean fileFree(String fileName){
-        if(localFiles.containsKey(fileName) && localFiles.get(fileName).status == Commands.READABLE){
+        if(localFiles.containsKey(fileName) && localFiles.get(fileName).status.equalsIgnoreCase(Commands.READABLE)){
             return true;
         } else if (!localFiles.containsKey(fileName)){
             return true;

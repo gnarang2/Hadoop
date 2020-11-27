@@ -127,7 +127,7 @@ public class Master {
 
             for (InetAddress ip : ipList) {
                 DistributedFileSystem.FileInformation file = filesInfo.files.get(ip);
-                if (file.status == Commands.WRITING) {
+                if (file.status.equalsIgnoreCase(Commands.WRITING)) {
                     if (operationsLock.isHeldByCurrentThread()) {
                         operationsLock.unlock();
                     }
