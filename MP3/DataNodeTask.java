@@ -34,16 +34,13 @@ public class DataNodeTask {
             this.inputFileName = inputFileName;
             this.outputFileName = outputFileName;
             this.executable = executable;
-            for(String t: taskString){
-                System.out.println(t);
-            }
-
+            
             for(int i = 0; i < taskString.length; i+=3){
                 ArrayList<String> temp = new ArrayList<>();
+                temp.add(taskString[i]);
                 temp.add(taskString[i+1]);
-                temp.add(taskString[i+2]);
                 temp.add("0");
-                taskDivisions.put(Integer.parseInt(taskString[i]), temp);
+                taskDivisions.put(Integer.parseInt(taskString[i+2]), temp);
             }
         }
 
@@ -142,15 +139,20 @@ public class DataNodeTask {
         }
 
         public void introduce(String[] taskList) {
+
+            for(String t: taskList){
+                System.out.println("Introduction on string: " + t);
+            }
+
             for(int i = 0; i < taskList.length; i+=3){
-                if(taskDivisions.containsKey(Integer.parseInt(taskList[i]))) {
+                if(taskDivisions.containsKey(Integer.parseInt(taskList[i+2]))) {
                     continue;
                 }
                 ArrayList<String> temp = new ArrayList<>();
+                temp.add(taskList[i]);
                 temp.add(taskList[i+1]);
-                temp.add(taskList[i+2]);
                 temp.add("0");
-                taskDivisions.put(Integer.parseInt(taskList[i]), temp);
+                taskDivisions.put(Integer.parseInt(taskList[i+2]), temp);
             }
         }
 
