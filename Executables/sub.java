@@ -91,7 +91,7 @@ public class sub {
             System.out.println("new iteration");
             System.out.println(i);
             System.out.println(val[i]);
-            System.out.println(val[i]);
+            System.out.println(val[i+1]);
             FileOperations obj = new FileOperations("test.txt", "output", "XYZ", Long.parseLong(val[i]), Long.parseLong(val[i+1]));
             mapple(obj);
         }
