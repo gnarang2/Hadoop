@@ -393,7 +393,7 @@ public class Client {
 
     // basically send it to master, which the master will send to all relevant files
     // public static boolean createExecutable(String fileName){
-    //     fileName = fileName.split(".")[0];
+    //     fileName = fileName.split("\\.")[0];
     //     Process ps;
     //     String javaFile = String.join(".", fileName, "java");
     //     String jarFile = String.join(".", fileName, "jar");

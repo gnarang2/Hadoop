@@ -216,7 +216,7 @@ public class FileSystem {
 
         String response = "";
         for(int i = 0; i < partitions.size(); i++){
-            response += Long.toString(partitions.get(i)) + "."; 
+            response += Long.toString(partitions.get(i)) + ":"; 
         }
 
         try {
