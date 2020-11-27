@@ -188,6 +188,8 @@ public class MappleTask extends Task{
         message[1] = getFileNames()[0];
         message[2] = getFileNames()[1];
         message[3] = getFileNames()[2];
+        System.out.println("Task being sent: ");
+        System.out.println(message);
         Integer i = 4;
         for(NodesTask task: list){
             message[i] = Long.toString(task.startOffset);
@@ -205,7 +207,7 @@ public class MappleTask extends Task{
     public String[] generateProgressMessageForIp(InetAddress ip) {
         Integer numTasks = getNumIpTask(ip);
         ArrayList<NodesTask> list = getNodesListByIp(ip);
-        String[] message = new String[4+numTasks*3];
+        String[] message = new String[(int)4+numTasks*3];
         message[0] = Commands.MD_PROGRESS_CHECK;
         message[1] = getFileNames()[0];
         message[2] = getFileNames()[1];
