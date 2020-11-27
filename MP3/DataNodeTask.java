@@ -128,15 +128,18 @@ public class DataNodeTask {
             File files = new File("DataNode/Executables");
             HashSet<String> filesSet = new HashSet<>();
             for(File file: files.listFiles()){
+                System.out.println(file.getName());
+                String[] name = file.getName().split("_");
+                System.out.println(file.getName().length());
+                System.out.println(this.executable.length());
+                
                 if(file.getName().length() < this.executable.length()){
                     continue;
                 }
                 if(!file.getName().substring(0, this.executable.length()).equalsIgnoreCase(this.executable)){
                     continue;
                 }
-                System.out.println(file.getName());
-                String[] name = file.getName().split("_");
-                System.out.println(name);
+                // String[] name = file.getName().split("_");
                 if(name.length == 3){
                     String key = name[2].substring(0, name[2].length() - 4);
                     response += key + "|";
