@@ -62,7 +62,7 @@ public class sub {
         } catch (IOException e) {
             return new String();
         }
-        partitions.add(offset);
+        partitions.add(file.length());
 
         String response = "";
         for(int i = 0; i < partitions.size(); i++){
