@@ -134,7 +134,9 @@ public class DataNodeTask {
                 if(!file.getName().substring(0, this.executable.length()).equalsIgnoreCase(this.executable)){
                     continue;
                 }
+                System.out.println(file.getName());
                 String[] name = file.getName().split("_");
+                System.out.println(name);
                 if(name.length == 3){
                     String key = name[2].substring(0, name[2].length() - 4);
                     response += key + "|";

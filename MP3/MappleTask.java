@@ -204,13 +204,14 @@ public class MappleTask extends Task{
 
     public String[] generateProgressMessageForIp(InetAddress ip) {
         Integer numTasks = getNumIpTask(ip);
-        System.out.println("Number of tasks: " + Integer.toString(numTasks));
         ArrayList<NodesTask> list = getNodesListByIp(ip);
         String[] message = new String[4+numTasks*3];
         message[0] = Commands.MD_PROGRESS_CHECK;
         message[1] = getFileNames()[0];
         message[2] = getFileNames()[1];
         message[3] = getFileNames()[2];
+        System.out.println("Task so far: ");
+        System.out.println(message);
         Integer i = 4;
         for(NodesTask task: list){
             if(task.status.equalsIgnoreCase(Commands.COMPLETE)){
@@ -221,7 +222,10 @@ public class MappleTask extends Task{
             message[i+2] = Integer.toString(task.uniqueID);
             i+=3;
         }
-        return Arrays.copyOfRange(message, 0, i);
+        message = Arrays.copyOfRange(message, 0, i);
+        System.out.println("Message being sent: ");
+        System.out.println(message);
+        return message;
     }
 
     public InetAddress getMainIp() {
