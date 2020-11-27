@@ -139,14 +139,18 @@ public class Scheduler {
                 if(currentTask.isTaskComplete()){
                     scheduleNextTask();
                 } else{
-                    for(InetAddress ip: currentTask.getIpList()){
-                        sendSchedulerMessage(Commands.PROGRESS, ip);
+                    if(currentTask.areTasksComplete()){
+                        for(InetAddress ip: currentTask.getIpList()){
+                            sendSchedulerMessage(Commands.PROGRESS, ip);
+                        }
+                    } else {
+                        // InetAddress mainIp = currentTask.getMainIp();
+                        // if(mainIp != null){
+                        //     sendSchedulerMessage(Commands.CONSOLIDATE, mainIp);
+                        // }
+                        // currentTask = null; 
+                        continue;                
                     }
-                    // InetAddress mainIp = currentTask.getMainIp();
-                    // if(mainIp != null){
-                    //     sendSchedulerMessage(Commands.CONSOLIDATE, mainIp);
-                    // }
-                    // currentTask = null;                    
                 }
             }
 
@@ -201,7 +205,9 @@ public class Scheduler {
                     for(; i < completedIds.length; i++){
                         String key = completedIds[i];
                         currentTask.keys.add(key);
+                        System.out.println(key);
                     }
+                    System.out.println(currentTask.areTasksComplete());
                     return;
                 }
                 default: {
