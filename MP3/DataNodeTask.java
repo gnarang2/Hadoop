@@ -25,14 +25,26 @@ public class DataNodeTask {
 
     public class DataNodeMapplePreTask extends TaskMethods {
 
-        String inputFileName;
-        String outputFileName;
-        String executable;
+        String inputFileName = new String();
+        String outputFileName = new String();
+        String executable = new String();
         HashMap<Integer, ArrayList<String>> taskDivisions = new HashMap<>();
+        
         public DataNodeMapplePreTask(String inputFileName, String outputFileName, String executable, String[] taskString) {
+            System.out.println("Object declaration");
+            System.out.println("File Names:");
+            
             this.inputFileName = inputFileName;
             this.outputFileName = outputFileName;
             this.executable = executable;
+
+            System.out.println(this.inputFileName);
+            System.out.println(this.outputFileName);
+            System.out.println(this.executable);
+            for(String off: taskString){
+                System.out.println("Offset is: " + off);
+            }
+
             for(int i = 0; i < taskString.length; i+=3){
                 ArrayList<String> temp = new ArrayList<>();
                 temp.add(taskString[i+1]);
@@ -67,8 +79,6 @@ public class DataNodeTask {
 
                 }
             }
-
-
             return filePresent; // get file from SDFS and put it in Executables folder
         }
 
@@ -110,7 +120,8 @@ public class DataNodeTask {
         }
 
         public String checkCompletion() {
-            String response = "";
+            System.out.println("Function called");
+            String response = new String();
             for(Integer i: taskDivisions.keySet()){
                 ArrayList<String> temp = taskDivisions.get(i);
                 response += String.valueOf(i) + "|";
