@@ -18,6 +18,7 @@ public class Runner {
 
         startRuntime = System.currentTimeMillis();
         Log.openFile();
+        FileSystem.setUp();
 
         Thread threads[] = { new Thread(() -> Messenger.main_listener(), "message listener"),
                 new Thread(() -> Messenger.main_processor(), "message processor"),

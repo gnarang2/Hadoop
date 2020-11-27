@@ -19,15 +19,20 @@ public class FileSystem {
 
     public FileSystem(String path){
         this.path = path;
-        File dir = new File(this.path);
-        if(!dir.exists()){
-            dir.mkdir();
-        } else if(dir.exists() && this.path == DistributedFileSystem.DataNodePath){
-            for(File files: dir.listFiles()){
-                files.delete();
-            }
+    }
+
+    public static void setUp(){
+
+        File dir = new File(DistributedFileSystem.DataNodePath);
+        dir.mkdirs();
+        for(File files: dir.listFiles()){
+            files.delete();
         }
-        setUpExecutablesFolder();
+        setUpExecutablesFolder(DistributedFileSystem.DataNodePath);
+        dir = new File(Client.ClientPath);
+        dir.mkdirs();
+        setUpExecutablesFolder(Client.ClientPath);
+        
     }
 
     public boolean fileExists(String fileName){
@@ -137,7 +142,7 @@ public class FileSystem {
         }
     }
 
-    public void setUpExecutablesFolder(){
+    public static void setUpExecutablesFolder(String path){
         File myObj = new File(path + "Executables");
         if(!myObj.exists()){
             myObj.mkdir();
