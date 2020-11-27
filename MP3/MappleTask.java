@@ -66,7 +66,7 @@ public class MappleTask extends Task{
     public String executable;
     public String status = Commands.INCOMPLETE;
     public Integer numKeys;
-    private ArrayList<Long> partitions;
+    private ArrayList<Long> partitions = new ArrayList<>();
     private String offsetString;
     private Integer ID = 0;
     private InetAddress mainIp = null;
@@ -148,6 +148,7 @@ public class MappleTask extends Task{
         String[] temp = this.offsetString.split(".");
         for(String off: temp){
             partitions.add(Long.valueOf(off));
+            System.out.println(off);
         }
         return partitions;
     }
