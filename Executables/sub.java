@@ -56,7 +56,7 @@ public class sub {
                     flag = 0;
                     currentLength = 0L;
                     partitions.add(offset);
-                    partitions.add(offset+1L);
+                    partitions.add(offset);
                 }
             }
         } catch (IOException e) {
