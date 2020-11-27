@@ -262,8 +262,9 @@ public class Client {
                     break;
                 }
                 message[4] = ClientFileSystem.getDivisions(Integer.parseInt(numMapples), fileName);
-                clientOperations(Commands.CM_PUT_FILE, fileName, fileName);
-                clientOperations(Commands.CM_PUT_FILE, exec, exec);
+                
+                clientOperations(Commands.PUT, fileName, fileName);
+                clientOperations(Commands.PUT, exec, exec);
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
                 message[0]  = Commands.CM_MAPPLE_PROGRESS;
                 while (true) {
