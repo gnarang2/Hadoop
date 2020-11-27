@@ -83,10 +83,14 @@ public class sub {
         // String machineNumber = args[2];
         // Long startOff = Long.parseLong(args[3]);
         // Long endOff = Long.parseLong(args[4]);
-        FileOperations obj = new FileOperations("test.txt", "output", "XYZ", 0L, 100L);
+        String[] val = getDivisions(4, "test.txt").split(":");
+        for(int i = 0; i < val.length; i+=2){
+            FileOperations obj = new FileOperations("test.txt", "output", "XYZ", Long.parseLong(val[i]), Long.parseLong(val[i+1]));
+            mapple(obj);
+        }
         
         // FileOperations obj = new FileOperations(inputFile, outputFile, machineNumber, startOff, endOff);
-        mapple(obj);
+        
         // System.out.println(getDivisions(4, "test.txt"));
         
     }

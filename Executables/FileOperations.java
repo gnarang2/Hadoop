@@ -5,9 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileOperations {
@@ -73,8 +70,6 @@ public class FileOperations {
             }
             this.currentPointer += 1L;
             String currentChar = new String(temp);
-            char c = currentChar.charAt(0);
-            System.out.println((int)c);
             if(currentChar.equalsIgnoreCase("\n")){
                 data[currentLines] = var;//.substring(0,var.length()-1);
                 var = new String("");
