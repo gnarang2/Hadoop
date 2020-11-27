@@ -220,7 +220,7 @@ public class MappleTask extends Task{
             message[i+2] = Integer.toString(task.uniqueID);
             i+=3;
         }
-        return Arrays.copyOfRange(message, 0, i+1);
+        return Arrays.copyOfRange(message, 0, i);
     }
 
     public InetAddress getMainIp() {
