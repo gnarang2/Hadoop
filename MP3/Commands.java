@@ -127,16 +127,17 @@ public class Commands {
                         break;
                     }
                     case MAPPLE:{
-                        if(split.length != 5){
-                            break;
-                        }
-                        if(!checkFileName(PUT, FileSystem.changeFile(split[1]))){
-                            break;
-                        }
-                        if(!checkFileName(PUT, FileSystem.changeFile(split[4]))){
-                            break;
-                        }
-                        Client.MappleJuiceOperations(split[0], split[1], split[2], split[3], split[4]);
+                        // if(split.length != 5){
+                        //     break;
+                        // }
+                        // if(!checkFileName(PUT, FileSystem.changeFile(split[1]))){
+                        //     break;
+                        // }
+                        // if(!checkFileName(PUT, FileSystem.changeFile(split[4]))){
+                        //     break;
+                        // }
+                        // Client.MappleJuiceOperations(split[0], split[1], split[2], split[3], split[4]);
+                        Client.MappleJuiceOperations(split[0], "program.jar", "4", "output.txt", "test.txt");
                         break;
                     }
                     case CM_LS:{
