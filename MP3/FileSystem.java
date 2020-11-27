@@ -169,17 +169,17 @@ public class FileSystem {
     }
 
     public String getExecutablePath(String fileName){
-        return String.join("", path,"Executables/",fileName);
+        return String.join("", this.path,"Executables/",fileName);
     }
 
 
-    public static String getDivisions(Integer numDivisions, String fileName){
+    public String getDivisions(Integer numDivisions, String fileName){
         
         ArrayList<Long> partitions = new ArrayList<>();
         
         FileInputStream fis;
         BufferedInputStream bis;
-        File file = new File(fileName);
+        File file = new File(getExecutablePath(fileName));
         try {
             fis = new FileInputStream(file);
             bis = new BufferedInputStream(fis);

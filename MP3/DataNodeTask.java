@@ -37,7 +37,7 @@ public class DataNodeTask {
             this.outputFileName = outputFileName;
             this.executable = executable;
             try {
-                this.machineNumber = MembershipList.getVMFromIp(InetAddress.getLocalHost());
+                this.machineNumber = MembershipList.getVMFromIp(InetAddress.getLocalHost()).substring(3);
             } catch (UnknownHostException e) {
     
             }
@@ -99,7 +99,7 @@ public class DataNodeTask {
             while(true){
                 System.out.println("Doing task :" + Integer.toString(currId));
                 try {
-                    ps = new ProcessBuilder("java", "-jar", this.executable, this.inputFileName, this.outputFileName, this.machineNumber, temp.get(0), temp.get(1)).start();
+                    ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, "DataNode/Executables/" + this.inputFileName, "DataNode/Executables/" + this.outputFileName, this.machineNumber, temp.get(0), temp.get(1)).start();
                     ps.waitFor();
                     System.out.println(ps.exitValue());
                     temp.set(2, "1");
