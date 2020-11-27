@@ -34,7 +34,10 @@ public class DataNodeTask {
             this.inputFileName = inputFileName;
             this.outputFileName = outputFileName;
             this.executable = executable;
-            System.out.println(taskString);
+            for(String t: taskString){
+                System.out.println(t);
+            }
+
             for(int i = 0; i < taskString.length; i+=3){
                 ArrayList<String> temp = new ArrayList<>();
                 temp.add(taskString[i+1]);
