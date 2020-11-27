@@ -491,10 +491,6 @@ class TCPThreadClient extends Thread {
 
         message = part.split("\\|");
 
-        System.out.println(message);
-
-
-
         switch(message[0]){ // parse based on who received the message
             case Commands.CM_MAPPLE_PROGRESS:
             case Commands.CM_START_MAPPLE:{

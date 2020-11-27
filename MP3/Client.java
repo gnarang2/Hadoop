@@ -265,6 +265,9 @@ public class Client {
                 
                 clientOperations(Commands.PUT, fileName, fileName);
                 clientOperations(Commands.PUT, exec, exec);
+                for(String method: message){
+                    System.out.println(method);
+                }
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
                 message[0]  = Commands.CM_MAPPLE_PROGRESS;
                 while (true) {
