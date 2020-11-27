@@ -140,10 +140,6 @@ public class DataNodeTask {
 
         public void introduce(String[] taskList) {
 
-            for(String t: taskList){
-                System.out.println("Introduction on string: " + t);
-            }
-
             for(int i = 0; i < taskList.length; i+=3){
                 if(taskDivisions.containsKey(Integer.parseInt(taskList[i+2]))) {
                     continue;
