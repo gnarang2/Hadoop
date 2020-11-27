@@ -207,7 +207,12 @@ public class Client {
             case Commands.CM_PUT_FILE:
             case Commands.CM_LS:
             case Commands.CM_DELETE_FILE: {
-                contents = (message[0] + "|" + message[1]).getBytes();
+                String sendMessage = new String("");
+                for(String method: message){
+                    sendMessage += method + "|";
+                }
+                sendMessage = sendMessage.substring(0, sendMessage.length()-1);
+                contents = sendMessage.getBytes();
                 output.write(contents);
                 contents = input.readAllBytes();
                 temp = new String(contents);
