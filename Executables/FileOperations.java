@@ -51,41 +51,6 @@ public class FileOperations {
         return true;
     }
 
-    public ArrayList<Long> getDivisions(Integer numDivisions){
-        
-        ArrayList<Long> partitions = new ArrayList<>();
-        File file = new File(this.input);
-        Long length = file.length();
-        Long divisionLength = length/numDivisions;
-        Long currentLength = 0L;
-        byte[] temp = new byte[1];
-        partitions.add(0L);
-        Integer flag = 0;
-        Long offset = 0L;
-        try {
-            while (bis.read(temp) >= 1) {
-                currentLength += 1L;
-                offset += 1L;
-                if(currentLength == divisionLength){
-                    flag = 1;
-                }
-                String var = new String(temp);
-                if(flag == 1 && var.equalsIgnoreCase("\n")){
-                    flag = 0;
-                    currentLength = 0L;
-                    partitions.add(offset);
-                    partitions.add(offset+1L);
-                }
-            }
-        } catch (IOException e) {
-            return new ArrayList<Long>();
-        }
-        partitions.add(offset);
-
-        return partitions;
-
-    }
-
     public String[] getFileData() {
 
         Integer length = 20;
@@ -108,6 +73,8 @@ public class FileOperations {
             }
             this.currentPointer += 1L;
             String currentChar = new String(temp);
+            char c = currentChar.charAt(0);
+            System.out.println((int)c);
             if(currentChar.equalsIgnoreCase("\n")){
                 data[currentLines] = var;//.substring(0,var.length()-1);
                 var = new String("");
