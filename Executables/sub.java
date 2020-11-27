@@ -50,7 +50,9 @@ public class sub {
                     flag = 1;
                 }
                 String var = new String(temp);
+                // System.out.println((int)var.charAt(0));
                 if(flag == 1 && var.equalsIgnoreCase("\n")){
+                    // System.out.println("Adding offset");
                     flag = 0;
                     currentLength = 0L;
                     partitions.add(offset);
@@ -88,6 +90,7 @@ public class sub {
         for(int i = 0; i < val.length; i+=2){
             FileOperations obj = new FileOperations("test.txt", "output", "XYZ", Long.parseLong(val[i]), Long.parseLong(val[i+1]));
             mapple(obj);
+            break;
         }
         
         // FileOperations obj = new FileOperations(inputFile, outputFile, machineNumber, startOff, endOff);
