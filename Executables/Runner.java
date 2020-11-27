@@ -9,7 +9,7 @@ public class Runner {
             ps = new ProcessBuilder("jar", "cfe", "program.jar", "sub", "sub.class", "FileOperations.class").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
-            ps = new ProcessBuilder("java","-jar","program.jar", ).start();
+            // ps = new ProcessBuilder("java","-jar","program.jar", ).start();
             // ps.waitFor();
             // System.out.println(ps.exitValue());
             // // Process ps2 = Runtime.getRuntime().exec(new String[]{"javac", "sub.java"});

@@ -173,13 +173,13 @@ public class FileSystem {
     }
 
 
-    public String getDivisions(Integer numDivisions, String fileName){
+    public static String getDivisions(Integer numDivisions, String fileName){
         
         ArrayList<Long> partitions = new ArrayList<>();
         
         FileInputStream fis;
         BufferedInputStream bis;
-        File file = new File(path + fileName);
+        File file = new File(fileName);
         try {
             fis = new FileInputStream(file);
             bis = new BufferedInputStream(fis);
@@ -206,13 +206,13 @@ public class FileSystem {
                     flag = 0;
                     currentLength = 0L;
                     partitions.add(offset);
-                    partitions.add(offset+1L);
+                    partitions.add(offset);
                 }
             }
         } catch (IOException e) {
             return new String();
         }
-        partitions.add(offset);
+        partitions.add(file.length());
 
         String response = "";
         for(int i = 0; i < partitions.size(); i++){
@@ -228,5 +228,6 @@ public class FileSystem {
         return response.substring(0, response.length()-1);
 
     }
+
 
 }
