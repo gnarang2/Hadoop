@@ -271,7 +271,11 @@ public class Messenger {
         }
 
         switch(message[0]){
-            case Commands.CM_START_MAPPLE:
+            case Commands.CM_START_MAPPLE:{
+                for(String method: message){
+                    System.out.println(method);
+                }
+            }
             case Commands.CM_MAPPLE_PROGRESS:
             case Commands.CM_GET_FILE:
             case Commands.CM_WRITE_FILE:
