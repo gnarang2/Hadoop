@@ -105,8 +105,6 @@ public class Scheduler {
             // }
             case Commands.PROGRESS:{
                 String[] message = progressMessageCreator(ip);
-                System.out.println("Progress message being sent is:");
-                System.out.println(message);
                 if(message.length <= 4){
                     return;
                 }
@@ -185,9 +183,7 @@ public class Scheduler {
                 //     input.read(temp); // we don't care what the node has to say
                 //     return;
                 // }
-                case Commands.MD_PROGRESS_CHECK:{
-                    System.out.println(message);
-                } 
+                case Commands.MD_PROGRESS_CHECK:
                 case Commands.MD_SCHEDULE_TASK:{
                     output.write(msg);
                     int n = input.read(temp);
