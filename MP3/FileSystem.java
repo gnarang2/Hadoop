@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileSystem {
@@ -164,6 +165,63 @@ public class FileSystem {
 
     public String getExecutablePath(String fileName){
         return String.join("", path,"Executables/",fileName);
+    }
+
+
+    public String getDivisions(Integer numDivisions, String fileName){
+        
+        ArrayList<Long> partitions = new ArrayList<>();
+        
+        FileInputStream fis;
+        BufferedInputStream bis;
+        File file = new File(path + fileName);
+        try {
+            fis = new FileInputStream(file);
+            bis = new BufferedInputStream(fis);
+        } catch (FileNotFoundException e) {
+            return new String();
+        }
+        
+        Long length = file.length();
+        Long divisionLength = length/numDivisions;
+        Long currentLength = 0L;
+        byte[] temp = new byte[1];
+        partitions.add(0L);
+        Integer flag = 0;
+        Long offset = 0L;
+        try {
+            while (bis.read(temp) >= 1) {
+                currentLength += 1L;
+                offset += 1L;
+                if(currentLength == divisionLength){
+                    flag = 1;
+                }
+                String var = new String(temp);
+                if(flag == 1 && var.equalsIgnoreCase("\n")){
+                    flag = 0;
+                    currentLength = 0L;
+                    partitions.add(offset);
+                    partitions.add(offset+1L);
+                }
+            }
+        } catch (IOException e) {
+            return new String();
+        }
+        partitions.add(offset);
+
+        String response = "";
+        for(int i = 0; i < partitions.size(); i++){
+            response += Long.toString(partitions.get(i)) + "|"; 
+        }
+
+        try {
+            fis.close();
+            bis.close();
+        } catch (IOException e) {
+        }
+        
+        return response.substring(0, response.length()-1);
+
     }
 
 }

@@ -252,12 +252,12 @@ public class Client {
 
         switch (request) {
             case Commands.MAPPLE: {
-                String[] message = new String[2];
+                String[] message = new String[6];
                 message[0] = Commands.CM_START_MAPPLE;
                 message[1] = fileName; // contains input file
                 message[2] = sdfsIntermediateFilenamePrefix; // contains the output file
                 message[3] = exec;
-                message[4] = numMapples;
+                message[5] = ClientFileSystem.getDivisions(Integer.parseInt(numMapples), fileName);
                 if (!checkMappleOperation(message)) {
                     break;
                 }

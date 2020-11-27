@@ -23,15 +23,15 @@ public class MappleTask extends Task{
 
         String status = Commands.INCOMPLETE;
         InetAddress node;
-        Integer startOffset;
-        Integer endOffset;
+        Long startOffset;
+        Long endOffset;
         Integer uniqueID;
 
-        public void setStartOffset(Integer off){
+        public void setStartOffset(Long off){
             this.startOffset = off;
         }
 
-        public void setEndOffset(Integer off){
+        public void setEndOffset(Long off){
             this.endOffset= off;
         }
 
@@ -66,17 +66,18 @@ public class MappleTask extends Task{
     public String executable;
     public String status = Commands.INCOMPLETE;
     public Integer numKeys;
+    private ArrayList<Long> partitions;
+    private String offsetString;
     private Integer ID = 0;
-    public Integer numMapple;
     private InetAddress mainIp = null;
     private ReentrantLock lock = new ReentrantLock();
 
-    public MappleTask(String input, String output, String exec, Integer numMapple){
+    public MappleTask(String input, String output, String exec, String offsets){
         this.taskType = Commands.MAPPLE;
         this.outputFileName = output;
         this.inputFileName = input;
-        this.numMapple = numMapple;
         this.executable = exec;
+        this.offsetString = offsets;
     }
 
     public boolean areTasksComplete(){
@@ -129,7 +130,7 @@ public class MappleTask extends Task{
         if(!minMachinesCheck()){
             return false;
         }
-        ArrayList<Integer> filePartitions = partitionFile(inputFileName);
+        ArrayList<Long> filePartitions = partitionFile(inputFileName);
         for(int i = 0; i < filePartitions.size(); i=i+2){
             InetAddress ip = selectLeastBusyNode();
             NodesTask tempTask = new NodesTask(ip);
@@ -140,8 +141,15 @@ public class MappleTask extends Task{
         return true;
     }
 
-    private ArrayList<Integer> partitionFile(String fileName){
-        return null;
+    private ArrayList<Long> partitionFile(String fileName){
+        if(partitions.size() > 0){
+            return partitions;
+        }
+        String[] temp = this.offsetString.split("\\|");
+        for(String off: temp){
+            partitions.add(Long.valueOf(off));
+        }
+        return partitions;
     }
 
 
@@ -182,8 +190,8 @@ public class MappleTask extends Task{
         message[3] = getFileNames()[2];
         Integer i = 4;
         for(NodesTask task: list){
-            message[i] = Integer.toString(task.startOffset);
-            message[i+1] = Integer.toString(task.endOffset);
+            message[i] = Long.toString(task.startOffset);
+            message[i+1] = Long.toString(task.endOffset);
             message[i+2] = Integer.toString(task.uniqueID);
             i+=3;
         }
@@ -207,8 +215,8 @@ public class MappleTask extends Task{
             if(task.status.equalsIgnoreCase(Commands.COMPLETE)){
                 continue;
             }
-            message[i] = Integer.toString(task.startOffset);
-            message[i+1] = Integer.toString(task.endOffset);
+            message[i] = Long.toString(task.startOffset);
+            message[i+1] = Long.toString(task.endOffset);
             message[i+2] = Integer.toString(task.uniqueID);
             i+=3;
         }
@@ -243,7 +251,7 @@ public class MappleTask extends Task{
         if(size == 1){
             return null;
         }
-        return Arrays.copyOfRange(msg, 0, size+1);
+        return Arrays.copyOfRange(msg, 0, size);
     }
 
     public String getInputFileName() {

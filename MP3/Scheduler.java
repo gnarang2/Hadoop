@@ -22,8 +22,8 @@ public class Scheduler {
     }
 
     public static void queueMappleTask(String fileName, String SDFSInterMediateFileNamePrefix,
-            String exec, Integer numMapple) {
-        MappleTask task = new MappleTask(fileName, SDFSInterMediateFileNamePrefix, exec, numMapple);
+            String exec, String offsets) {
+        MappleTask task = new MappleTask(fileName, SDFSInterMediateFileNamePrefix, exec, offsets);
         taskList.add(task);
     }
 
@@ -36,7 +36,7 @@ public class Scheduler {
                         output.write(Commands.OK.getBytes());
                     } catch (IOException e) {
                     }
-                    queueMappleTask(message[1], message[2], message[3], Integer.parseInt(message[4]));
+                    queueMappleTask(message[1], message[2], message[3], message[4]);
                 }
                 return;
             }
