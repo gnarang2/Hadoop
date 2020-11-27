@@ -137,7 +137,7 @@ public class Commands {
                         //     break;
                         // }
                         // Client.MappleJuiceOperations(split[0], split[1], split[2], split[3], split[4]);
-                        Client.MappleJuiceOperations(split[0], "program.jar", "4", "output.txt", "test.txt");
+                        Client.MappleJuiceOperations(split[0], "program.jar", "4", "output", "test.txt");
                         break;
                     }
                     case CM_LS:{
