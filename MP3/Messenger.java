@@ -491,6 +491,8 @@ class TCPThreadClient extends Thread {
 
         message = part.split("\\|");
 
+        System.out.println(message);
+
 
 
         switch(message[0]){ // parse based on who received the message
