@@ -231,7 +231,7 @@ public class Client {
                 response += "num_mapples should be greater than 0.\n";
             }
         } catch (NumberFormatException e) {
-            response += "num_mapples should valid.\n";
+            response += "num_mapples should be valid.\n";
         }
 
         if (!ClientFileSystem.fileExists(message[1])) {
@@ -252,15 +252,16 @@ public class Client {
 
         switch (request) {
             case Commands.MAPPLE: {
-                String[] message = new String[6];
+                String[] message = new String[5];
                 message[0] = Commands.CM_START_MAPPLE;
                 message[1] = fileName; // contains input file
                 message[2] = sdfsIntermediateFilenamePrefix; // contains the output file
                 message[3] = exec;
-                message[5] = ClientFileSystem.getDivisions(Integer.parseInt(numMapples), fileName);
+                message[4] = numMapples;
                 if (!checkMappleOperation(message)) {
                     break;
                 }
+                message[4] = ClientFileSystem.getDivisions(Integer.parseInt(numMapples), fileName);
                 clientOperations(Commands.CM_PUT_FILE, fileName, fileName);
                 clientOperations(Commands.CM_PUT_FILE, exec, exec);
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
