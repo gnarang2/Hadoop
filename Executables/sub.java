@@ -15,6 +15,7 @@ public class sub {
                 break;
             }
             for(String pair: temp){
+                System.out.println(pair);
                 myObj.appendFileData(new String(pair + " 1\n"), pair);
             }
         }
