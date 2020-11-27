@@ -49,7 +49,7 @@ public class DataNode {
                 // String outputFileName = message[2];
                 // String executable = message[3];
                 String[] taskString = Arrays.copyOfRange(message, 4, message.length);
-                ack = "";
+                ack = Commands.TASK_NOT_PRESENT;
                 if(currentTask != null){
                     currentTask.task.introduce(taskString);
                     ack = currentTask.task.checkCompletion();

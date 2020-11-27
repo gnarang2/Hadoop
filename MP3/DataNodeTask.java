@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class DataNodeTask {
 
@@ -29,11 +30,17 @@ public class DataNodeTask {
         String outputFileName = new String();
         String executable = new String();
         HashMap<Integer, ArrayList<String>> taskDivisions = new HashMap<>();
+        String machineNumber = new String();
         
         public DataNodeMapplePreTask(String inputFileName, String outputFileName, String executable, String[] taskString) {
             this.inputFileName = inputFileName;
             this.outputFileName = outputFileName;
             this.executable = executable;
+            try {
+                this.machineNumber = MembershipList.getVMFromIp(InetAddress.getLocalHost());
+            } catch (UnknownHostException e) {
+    
+            }
             
             for(int i = 0; i < taskString.length; i+=3){
                 ArrayList<String> temp = new ArrayList<>();
@@ -81,32 +88,29 @@ public class DataNodeTask {
         }
 
         public void execute() {
-            for(Integer i: taskDivisions.keySet()){
-                System.out.println(taskDivisions.get(i));
-            }
+            // for(Integer i: taskDivisions.keySet()){
+            //     System.out.println(taskDivisions.get(i));
+            // }
             
-            // while(true){
-            //     System.out.println("Execute being called....\n");
-            // }
-            // Process ps;
-            // Iterator<Integer> ID = taskDivisions.keySet().iterator();
-            // Integer currId = ID.next();
-            // ArrayList<String> temp = taskDivisions.get(currId);
-            // while(!temp.isEmpty()){
-            //     try {
-            //         ps = new ProcessBuilder("java", "-jar", this.executable, this.inputFileName, this.outputFileName, Integer.toString(currId), temp.get(0), temp.get(1)).start();
-            //         ps.waitFor();
-            //         temp.set(2, "1");
-            //     } catch (Exception e) {
-            //         continue;
-            //     }
-            //     if(ID.hasNext()){
-            //         currId = ID.next();
-            //         temp = taskDivisions.get(currId);
-            //     } else {
-            //         temp = new ArrayList<String>();
-            //     }
-            // }
+            Process ps;
+            Iterator<Integer> ID = taskDivisions.keySet().iterator();
+            Integer currId = ID.next();
+            ArrayList<String> temp = taskDivisions.get(currId);
+            while(true){
+                try {
+                    ps = new ProcessBuilder("java", "-jar", this.executable, this.inputFileName, this.outputFileName, this.machineNumber, temp.get(0), temp.get(1)).start();
+                    ps.waitFor();
+                    temp.set(2, "1");
+                } catch (Exception e) {
+                    continue;
+                }
+                if(ID.hasNext()){
+                    currId = ID.next();
+                    temp = taskDivisions.get(currId);
+                } else {
+                    break;
+                }
+            }
         }
 
         public String checkCompletion() {
