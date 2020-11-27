@@ -53,7 +53,8 @@ public class DataNode {
                 if(currentTask != null){
                     currentTask.task.introduce(taskString);
                     ack = currentTask.task.checkCompletion();
-                } 
+                }
+                System.out.println(ack);
                 // else {
                 //     ack = Commands.TASK_NOT_PRESENT;
                 //     currentTask = new DataNodeTask(inputFileName, outputFileName, executable, taskString);
