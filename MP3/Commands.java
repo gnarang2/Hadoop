@@ -133,9 +133,6 @@ public class Commands {
                         if(!checkFileName(PUT, FileSystem.changeFile(split[1]))){
                             break;
                         }
-                        if(!checkFileName(PUT, FileSystem.changeFile(split[3]))){
-                            break;
-                        }
                         if(!checkFileName(PUT, FileSystem.changeFile(split[4]))){
                             break;
                         }
