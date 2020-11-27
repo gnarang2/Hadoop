@@ -141,7 +141,7 @@ public class Scheduler {
                 if(currentTask.isTaskComplete()){
                     scheduleNextTask();
                 } else{
-                    if(currentTask.areTasksComplete()){
+                    if(!currentTask.areTasksComplete()){
                         for(InetAddress ip: currentTask.getIpList()){
                             sendSchedulerMessage(Commands.PROGRESS, ip);
                         }
