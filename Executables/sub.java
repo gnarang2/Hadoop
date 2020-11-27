@@ -87,7 +87,7 @@ public class sub {
         // Long startOff = Long.parseLong(args[3]);
         // Long endOff = Long.parseLong(args[4]);
         String[] val = getDivisions(4, "test.txt").split(":");
-        for(int i = 0; i < val.length; i+=2){
+        for(int i = 2; i < val.length; i+=2){
             FileOperations obj = new FileOperations("test.txt", "output", "XYZ", Long.parseLong(val[i]), Long.parseLong(val[i+1]));
             mapple(obj);
             break;
