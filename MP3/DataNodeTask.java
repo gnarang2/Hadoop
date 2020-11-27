@@ -125,19 +125,20 @@ public class DataNodeTask {
                 }
             }
             response += Commands.KEYS + "|";
-            File files = new File(".");
+            File files = new File("DataNode/Executables");
             HashSet<String> filesSet = new HashSet<>();
             for(File file: files.listFiles()){
-                String[] name = file.getName().split("_");
-                if(name.length == 4){
-                    String key = name[4].substring(0, name[4].length() - 4);
-                    if(filesSet.contains(key)){
-                        continue;
-                    } else {
-                        response += key + "|";
-                        filesSet.add(key);
-                    }
-                }
+                System.out.println(file.getName());
+                // String[] name = file.getName().split("_");
+                // if(name.length == 4){
+                //     String key = name[4].substring(0, name[4].length() - 4);
+                //     if(filesSet.contains(key)){
+                //         continue;
+                //     } else {
+                //         response += key + "|";
+                //         filesSet.add(key);
+                //     }
+                // }
             }
             return response.substring(0, response.length()-1);
         }

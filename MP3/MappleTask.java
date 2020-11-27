@@ -204,6 +204,7 @@ public class MappleTask extends Task{
 
     public String[] generateProgressMessageForIp(InetAddress ip) {
         Integer numTasks = getNumIpTask(ip);
+        System.out.println("Number of tasks: " + Integer.toString(numTasks));
         ArrayList<NodesTask> list = getNodesListByIp(ip);
         String[] message = new String[4+numTasks*3];
         message[0] = Commands.MD_PROGRESS_CHECK;
