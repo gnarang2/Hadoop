@@ -45,17 +45,19 @@ public class DataNode {
             //     break;
             // }
             case Commands.MD_PROGRESS_CHECK:{
-                String inputFileName = fileName;
-                String outputFileName = message[2];
-                String executable = message[3];
+                // String inputFileName = fileName;
+                // String outputFileName = message[2];
+                // String executable = message[3];
                 String[] taskString = Arrays.copyOfRange(message, 4, message.length);
+                ack = "";
                 if(currentTask != null){
                     currentTask.task.introduce(taskString);
                     ack = currentTask.task.checkCompletion();
-                } else {
-                    ack = Commands.TASK_NOT_PRESENT;
-                    currentTask = new DataNodeTask(inputFileName, outputFileName, executable, taskString);
-                }
+                } 
+                // else {
+                //     ack = Commands.TASK_NOT_PRESENT;
+                //     currentTask = new DataNodeTask(inputFileName, outputFileName, executable, taskString);
+                // }
                 output.write(ack.getBytes());
                 break;
             }
@@ -65,7 +67,7 @@ public class DataNode {
                 String executable = message[3];
                 String[] taskString = Arrays.copyOfRange(message, 4, message.length);
                 // if(currentTask == null){
-                currentTask = new DataNodeTask(inputFileName, outputFileName, executable, taskString);
+                currentTask = new DataNodeTask(Commands.MAPPLE, inputFileName, outputFileName, executable, taskString);
                 // } else {
                 //     currentTask.introduce(taskString);
                 // }

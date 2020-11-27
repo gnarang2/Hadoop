@@ -242,19 +242,19 @@ public class DataNodeTask {
     //     return this.task.checkCompletion();
     // }
     
-    public boolean checkTaskType(String fileName){
-        if(fileName.substring(0, 6).equalsIgnoreCase(Commands.MAPPLE)){
+    public boolean checkTaskType(String taskType){
+        if(taskType.equalsIgnoreCase(Commands.MAPPLE)){
             return true;
         } else {
             return false;
         }
     }
 
-	public DataNodeTask(String inputFileName, String outputFileName, String executable, String[] taskString) {
+	public DataNodeTask(String taskType, String inputFileName, String outputFileName, String executable, String[] taskString) {
 
         this.input = inputFileName;
 
-        if(checkTaskType(executable)){
+        if(checkTaskType(taskType)){
             this.task = new DataNodeMapplePreTask(inputFileName, outputFileName, executable, taskString);
             TaskThread ft = new TaskThread(this.task);
             ft.start();
