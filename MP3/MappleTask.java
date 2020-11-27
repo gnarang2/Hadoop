@@ -189,7 +189,9 @@ public class MappleTask extends Task{
         message[2] = getFileNames()[1];
         message[3] = getFileNames()[2];
         System.out.println("Task being sent: ");
-        System.out.println(message);
+        for(String s: Arrays.copyOfRange(message, 0, 4)){
+            System.out.println(message);
+        }
         Integer i = 4;
         for(NodesTask task: list){
             message[i] = Long.toString(task.startOffset);
@@ -213,7 +215,9 @@ public class MappleTask extends Task{
         message[2] = getFileNames()[1];
         message[3] = getFileNames()[2];
         System.out.println("Task so far: ");
-        System.out.println(message);
+        for(String s: Arrays.copyOfRange(message, 0, 4)){
+            System.out.println(message);
+        }
         Integer i = 4;
         for(NodesTask task: list){
             if(task.status.equalsIgnoreCase(Commands.COMPLETE)){
