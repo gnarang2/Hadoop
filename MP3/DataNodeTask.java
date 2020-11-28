@@ -241,10 +241,12 @@ public class DataNodeTask {
                 filePresent = true;
                 return filePresent;
             }
+            System.out.println("Fetching file: " + fileName);
             String[] reply = Messenger.DataNodeTCPSender(ip, message);
             if(reply.length == 0){
                 return filePresent;
             }
+            System.out.println("Reply is: " + reply[0]);
             if(reply[0].equalsIgnoreCase(Commands.OK)){
                 if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
                     filePresent = true;
