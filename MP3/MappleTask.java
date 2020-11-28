@@ -247,9 +247,16 @@ public class MappleTask extends Task{
                 msg[size] = ip.getHostAddress();
                 msg[size+1] = Integer.toString(task.uniqueID);
                 size+=2;
-                break;
             }
         }
+        msg[size] = Commands.KEYS;
+        size += 1;
+        for(String key: keys){
+            msg[size] = key;
+            size+=1;
+        }
+
+        
         return Arrays.copyOfRange(msg, 0, size);
     }
 

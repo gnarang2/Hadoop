@@ -65,12 +65,15 @@ public class DataNode {
                 String inputFileName = fileName;
                 String outputFileName = message[2];
                 String[] taskString = Arrays.copyOfRange(message, 4, message.length);
-                // if(currentTask == null){
-                consolidateTask = new DataNodeTask(Commands.MAPPLE_CONSOLIDATE, inputFileName, outputFileName, taskString);
-                // } else {
-                //     currentTask.introduce(taskString);
-                // }
-                ack = currentTask.task.checkCompletion();
+                if(consolidateTask == null){
+                    consolidateTask = new DataNodeTask(Commands.MAPPLE_CONSOLIDATE, inputFileName, outputFileName, taskString);
+                } else {
+                    consolidateTask.task.introduce(taskString);
+                }
+                ack = consolidateTask.task.checkCompletion();
+                if(ack.equalsIgnoreCase(Commands.COMPLETE)){
+                    consolidateTask = null;
+                }
                 output.write(ack.getBytes());
                 break;
             }

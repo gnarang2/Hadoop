@@ -207,6 +207,12 @@ public class DataNodeTask {
         }
 
         private boolean getFile(InetAddress ip, Integer id) {
+            try {
+                if (ip.equals(InetAddress.getLocalHost())) {
+                    return true;
+                }
+            } catch (UnknownHostException e) {
+            }
             boolean filePresent = false;
             String fileName = outputFileName + "_" + Integer.toString(id);
             String[] message = new String[3];
@@ -294,9 +300,6 @@ public class DataNodeTask {
         }
 
         public void execute() {
-            while(getInputFile()){
-                
-            }
             consolidate();
             taskComplete = Commands.COMPLETE;
             
