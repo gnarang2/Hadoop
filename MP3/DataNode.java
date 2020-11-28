@@ -87,8 +87,10 @@ public class DataNode {
                 String outputFileName = message[2];
                 String[] taskString = Arrays.copyOfRange(message, 4, message.length);
                 if(consolidateTask == null){
+                    System.out.println("Introducing new consolidation task....");
                     consolidateTask = new DataNodeTask(Commands.MAPPLE_CONSOLIDATE, inputFileName, outputFileName, taskString);
                 } else {
+                    System.out.println("Adding to prev consolidation task.....");
                     consolidateTask.task.introduce(taskString);
                 }
                 ack = consolidateTask.task.checkCompletion();

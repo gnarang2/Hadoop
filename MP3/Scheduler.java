@@ -186,7 +186,6 @@ public class Scheduler {
                         return;
                     }
                     ack = new String(temp).substring(0, n);
-                    System.out.println("Consolidate ack: " + ack);
                     if(ack.equalsIgnoreCase(Commands.COMPLETE)){
                         currentTask.status = Commands.COMPLETE;
                     }
