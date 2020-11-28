@@ -83,8 +83,6 @@ public class Scheduler {
             for(InetAddress ip: currentTask.getIpList()){
                 sendSchedulerMessage(currentTask.taskType, ip);
             }
-        } else {
-            currentTask = null;
         }
     }
 
@@ -133,6 +131,7 @@ public class Scheduler {
                 if(currentTask.isTaskComplete()){
                     scheduleNextTask();
                     flag = 0;
+                    System.out.println("In this loop...");
                 } else{
                     if(!currentTask.areTasksComplete()){
                         for(InetAddress ip: currentTask.getIpList()){
@@ -187,7 +186,6 @@ public class Scheduler {
                         return;
                     }
                     ack = new String(temp).substring(0, n);
-                    System.out.println(ack);
                     if(ack.equalsIgnoreCase(Commands.COMPLETE)){
                         currentTask.status = Commands.COMPLETE;
                     }

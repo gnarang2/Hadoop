@@ -282,7 +282,7 @@ public class Client {
                         break;
                     }
                     try {
-                        Thread.sleep(10000); //TODO
+                        Thread.sleep(1000); //TODO
                     } catch (InterruptedException e) {
                     }
                 }

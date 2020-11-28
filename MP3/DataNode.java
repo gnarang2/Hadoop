@@ -74,8 +74,6 @@ public class DataNode {
                 if(ack.equalsIgnoreCase(Commands.COMPLETE)){
                     consolidateTask = null;
                 }
-                System.out.println(Commands.COMPLETE);
-                // ack = Commands.INCOMPLETE;
                 output.write(ack.getBytes());
                 break;
             }
