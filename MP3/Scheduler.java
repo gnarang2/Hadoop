@@ -50,6 +50,7 @@ public class Scheduler {
                             if(t.getInputFileName().equalsIgnoreCase(message[1]) && t.getOutputFileName().equalsIgnoreCase(message[2])){
                                 if(t.isTaskComplete()){
                                     output.write(Commands.DONE.getBytes());
+                                    currentTask = null;
                                     return;
                                 } else {
                                     output.write(Commands.OK.getBytes());

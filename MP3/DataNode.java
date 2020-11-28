@@ -62,6 +62,7 @@ public class DataNode {
                 }
             }
             case Commands.MD_PROGRESS_CHECK:{
+                System.out.println("Received progress checker???");
                 // String inputFileName = fileName;
                 // String outputFileName = message[2];
                 // String executable = message[3];
