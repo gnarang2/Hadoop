@@ -259,7 +259,7 @@ public class DataNodeTask {
             InetAddress ip = null;
             Boolean returnVal = true;
             for(Integer id: taskDivisions.keySet()){
-                if(taskDivisions.get(id).get(2).equalsIgnoreCase("1")){
+                if(taskDivisions.get(id).get(1).equalsIgnoreCase("1")){
                     continue;
                 }
                 if(taskDivisions.containsKey(id)){
