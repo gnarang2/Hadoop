@@ -257,31 +257,31 @@ public class DataNodeTask {
 
         public boolean getInputFile() {
             return true;
-            InetAddress ip = null;
-            Boolean returnVal = true;
-            for(Integer id: taskDivisions.keySet()){
-                if(taskDivisions.get(id).get(1).equalsIgnoreCase("1")){
-                    continue;
-                }
-                if(taskDivisions.containsKey(id)){
-                    try {
-                        ip = InetAddress.getByName(taskDivisions.get(id).get(0));
-                    } catch (UnknownHostException e) {
-                        continue;
-                    }
-                    Boolean keyValue = true;
-                    for(String key: keyList){
-                        if(!getFile(ip, id, key)){
-                            returnVal = false;
-                            keyValue = false;
-                        }
-                    }
-                    if(keyValue){
-                        taskDivisions.get(id).set(1, "1");
-                    }
-                }
-            }
-            return returnVal;
+            // InetAddress ip = null;
+            // Boolean returnVal = true;
+            // for(Integer id: taskDivisions.keySet()){
+            //     if(taskDivisions.get(id).get(1).equalsIgnoreCase("1")){
+            //         continue;
+            //     }
+            //     if(taskDivisions.containsKey(id)){
+            //         try {
+            //             ip = InetAddress.getByName(taskDivisions.get(id).get(0));
+            //         } catch (UnknownHostException e) {
+            //             continue;
+            //         }
+            //         Boolean keyValue = true;
+            //         for(String key: keyList){
+            //             if(!getFile(ip, id, key)){
+            //                 returnVal = false;
+            //                 keyValue = false;
+            //             }
+            //         }
+            //         if(keyValue){
+            //             taskDivisions.get(id).set(1, "1");
+            //         }
+            //     }
+            // }
+            // return returnVal;
         }
 
         public boolean getExecutable() {
