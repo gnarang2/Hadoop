@@ -259,6 +259,7 @@ public class DataNodeTask {
                 String str;
                 while ((str = in.readLine()) != null) {
                     out.write(str);
+                    out.write("\n");
                 }
                 in.close();
                 out.close();
@@ -268,7 +269,7 @@ public class DataNodeTask {
 
         private void combineFiles(ArrayList<File> listOfFiles, String name){
             // delete files too.....
-            String filePath = "DataNode/Executables/" + this.outputFileName + name + ".txt"; 
+            String filePath = "DataNode/Executables/" + this.outputFileName + "_" + name + ".txt"; 
             File CombinedFile = new File(filePath);
             for(File file: listOfFiles){
                 addToFile(CombinedFile, file);
