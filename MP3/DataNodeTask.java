@@ -171,7 +171,6 @@ public class DataNodeTask {
         public String checkCompletion(String name) {
             String id = name.split("_")[1];
             Integer numID = Integer.parseInt(id);
-            System.out.println("ID is: " + id);
             if(!taskDivisions.containsKey(numID)){
                 return Commands.FILE_NOT_PRESENT;
             }
@@ -212,8 +211,10 @@ public class DataNodeTask {
                 temp.add("0");
                 taskDivisions.put(Integer.parseInt(taskString[i+1]), temp);
             }
-            i+=1;
             for(; i < taskString.length; i+=1){
+                if(taskString[i].equalsIgnoreCase(Commands.KEYS)){
+                    continue;
+                }
                 keyList.add(taskString[i]);
             }
 
@@ -229,7 +230,7 @@ public class DataNodeTask {
                 if (ip.equals(InetAddress.getLocalHost())) {
                     return true;
                 }
-                machineNumber = MembershipList.getVMFromIp(InetAddress.getLocalHost()).substring(3); 
+                machineNumber = MembershipList.getVMFromIp(ip).substring(3); 
             } catch (UnknownHostException e) {
             }
             boolean filePresent = false;
