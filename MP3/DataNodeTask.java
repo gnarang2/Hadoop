@@ -103,7 +103,7 @@ public class DataNodeTask {
             ArrayList<String> temp = taskDivisions.get(currId);
             while(true){
                 try {
-                    ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, "DataNode/Executables/" + this.inputFileName, "DataNode/Executables/" + this.outputFileName + "_" + Integer.toString(currId), this.machineNumber, temp.get(0), temp.get(1)).start();
+                    ps = new ProcessBuilder("java", "-jar", "DataNode/" + this.executable, "DataNode/Executables/" + this.inputFileName, "DataNode/Executables/" + this.outputFileName + "_" + Integer.toString(currId), this.machineNumber, temp.get(0), temp.get(1)).start();
                     ps.waitFor();
                     temp.set(2, "1");
                 } catch (Exception e) {
