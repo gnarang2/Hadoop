@@ -469,6 +469,11 @@ public class Master {
         InetAddress ip = socket.getInetAddress();
         try {
             switch (requestType) {
+                case Commands.MD_DELETE_CONTENT:{
+                    output.write(String.join("|", message).getBytes());
+                    int n = input.read(temp);
+                    return;
+                }
                 case Commands.MD_GET_FILE: {
                     Integer updateCount = Integer.parseInt(message[3]);
                     output.write(String.join("|", message).getBytes());

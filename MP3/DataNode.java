@@ -38,6 +38,12 @@ public class DataNode {
         byte[] temp = new byte[1024];
         String ack = new String();
         switch(requestType){
+            case Commands.MD_DELETE_CONTENT:{
+                DistributedFileSystem.DataNodeFileSystem.cleanUpExecutablesFolder();
+                Client.ClientFileSystem.cleanUpExecutablesFolder();
+                output.write(Commands.OK.getBytes());
+                return;
+            }
             case Commands.MP_GET_FILE:{
 
                 // Write either FILE_BUSY|FILE_NOT_PRESENT

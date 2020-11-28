@@ -89,6 +89,13 @@ public class Scheduler {
 
     private static void sendSchedulerMessage(String taskType, InetAddress ip) {
         switch(taskType){
+            case Commands.DELETE_CONTENT:{
+                String[] message = new String[2];
+                message[0] = Commands.MD_DELETE_CONTENT;
+                message[1] = "null";
+                Messenger.DataNodeTCPSender(ip, message);
+                break;
+            }
             case Commands.MAPPLE:{
                 String[] message = schedulingMessageCreator(ip);
                 Messenger.DataNodeTCPSender(ip, message);
@@ -128,6 +135,11 @@ public class Scheduler {
             if(currentTask == null){
                 scheduleNextTask();
                 flag = 0;
+                if(currentTask == null){
+                    for(MembershipList.Member member : MembershipList.getMembers()){
+                        sendSchedulerMessage(Commands.DELETE_CONTENT, member.ip);    
+                    }
+                }
             } else {
                 if(currentTask.isTaskComplete()){
                     scheduleNextTask();

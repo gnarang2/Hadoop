@@ -231,6 +231,10 @@ public class Messenger {
                 Master.sendDataNodeMessage(clientSocket, input, output, message);
                 break;
             }
+            case Commands.MD_DELETE_CONTENT:{
+                Master.sendDataNodeMessage(clientSocket, input, output, message);
+                break;
+            }
             // case Commands.MD_CONSOLIDATE_CANCEL:
             // case Commands.MD_CONSOLIDATE:
             case Commands.MD_PROGRESS_CHECK:
@@ -422,6 +426,7 @@ class TCPThreadDataNode extends Thread{
             }
             case Commands.MP_GET_FILE:
             case Commands.MD_CONSOLIDATE:
+            case Commands.MD_DELETE_CONTENT:
             case Commands.MD_PROGRESS_CHECK:
             case Commands.MD_SCHEDULE_TASK:
             case Commands.MD_GET_FILE:

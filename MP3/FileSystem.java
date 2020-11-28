@@ -182,6 +182,13 @@ public class FileSystem {
         return String.join("", this.path,"Executables/",fileName);
     }
 
+    public void cleanUpExecutablesFolder(){
+        File execPath = new File(getExecutablePath());
+        for(File files: execPath.listFiles()){
+            files.delete();
+        }
+    }
+
 
     public String getDivisions(Integer numDivisions, String fileName){
         
