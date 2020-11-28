@@ -43,8 +43,6 @@ public class DataNode {
                 // Write either FILE_BUSY|FILE_NOT_PRESENT
                 // OR FILE DATA....
                 ack = currentTask.task.checkCompletion(fileName);
-                System.out.println("File requested: " + fileName);
-                System.out.println("Status: " + ack);
                 if(ack.equalsIgnoreCase(Commands.FILE_BUSY) || ack.equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
                     return;
                 }
@@ -58,7 +56,7 @@ public class DataNode {
                 long fileSize = Long.parseLong(ack); // return fileSize
                 long offset = 0;
                 while (offset < fileSize) {
-                    fileData = DistributedFileSystem.getFileData("Executables/" + fileName + ".txt", (int) offset);
+                    fileData = DistributedFileSystem.getFileData("Executables/" + fileName, (int) offset);
                     output.write(fileData, 0, Math.min(Messenger.MAX_MESSAGE_SIZE, (int) (fileSize - offset)));
                     offset += (long) Math.min(Messenger.MAX_MESSAGE_SIZE, (int) (fileSize - offset));
                 }
