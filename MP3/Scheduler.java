@@ -114,6 +114,7 @@ public class Scheduler {
                 break;
             }
             case Commands.JUICE:{
+                System.out.println("Sending juice message......");
                 String[] message = schedulingMessageCreator(ip);
                 Messenger.DataNodeTCPSender(ip, message);
                 break;
@@ -206,22 +207,9 @@ public class Scheduler {
                     }
                     break;
                 }
-                case Commands.MD_SCHEDULE_JUICE_TASK:{
-                    output.write(msg);
-                    int n = input.read(temp);
-                    if (n < 0) {
-                        return;
-                    }
-                    ack = new String(temp).substring(0, n);
-                    String[] completedKeys = ack.split("\\|");
-                    for(int i = 1; i < completedKeys.length; i+=2){
-                        String key = completedKeys[i];
-                        String status = completedKeys[i+1];
-                        currentTask.changeStatus(ip, key, status);
-                    }
-                    return;
-                }
+                case Commands.MD_SCHEDULE_JUICE_TASK:
                 case Commands.MD_JUICE_PROGRESS_CHECK:{
+                    System.out.println("Scheduling juice task............");
                     output.write(msg);
                     int n = input.read(temp);
                     if (n < 0) {
