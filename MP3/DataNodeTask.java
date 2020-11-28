@@ -242,6 +242,7 @@ public class DataNodeTask {
             message[2] = Integer.toString(id);
             System.out.println("Working on file: " + message[1]);
             if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
+                System.out.println("File fetched....");
                 filePresent = true;
                 return filePresent;
             }
