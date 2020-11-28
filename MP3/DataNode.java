@@ -63,13 +63,6 @@ public class DataNode {
                 break;
             }
             case Commands.MD_PROGRESS_CHECK:{
-                System.out.println("Received progress checker???");
-                // String inputFileName = fileName;
-                // String outputFileName = message[2];
-                // String executable = message[3];
-                for(String i: message){
-                    System.out.println(i);
-                }
                 if(message.length < 4){
                     ack = currentTask.task.checkCompletion();
                     output.write(ack.getBytes());

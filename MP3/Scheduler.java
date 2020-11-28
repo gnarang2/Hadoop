@@ -138,8 +138,10 @@ public class Scheduler {
                         for(InetAddress ip: currentTask.getIpList()){
                             sendSchedulerMessage(Commands.PROGRESS, ip);
                         }
+                        System.out.println("Sending progress message....");
                     } else {
                         flag = 1;
+                        System.out.println("Mini-tasks complete");
                     }
                     if(flag == 1){
                         InetAddress mainIp = currentTask.getMainIp();
