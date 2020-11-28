@@ -65,8 +65,7 @@ public class MappleTask extends Task{
     private String offsetString;
     private Integer ID = 0;
     private InetAddress mainIp = null;
-    private ReentrantLock lock = new ReentrantLock();
-
+    
     public MappleTask(String input, String output, String exec, String offsets){
         this.taskType = Commands.MAPPLE;
         this.outputFileName = output;

@@ -471,7 +471,7 @@ public class Master {
             switch (requestType) {
                 case Commands.MD_DELETE_CONTENT:{
                     output.write(String.join("|", message).getBytes());
-                    int n = input.read(temp);
+                    input.read(temp);
                     return;
                 }
                 case Commands.MD_GET_FILE: {

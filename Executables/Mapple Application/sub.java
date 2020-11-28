@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class sub {
 
-    public static void mapple(FileOperations myObj){
+    public static void mapple(FileOperations myObj) {
         String[] temp = new String[0];
         while(true){
             temp = myObj.getFileData();

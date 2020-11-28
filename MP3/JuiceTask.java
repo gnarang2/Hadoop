@@ -2,10 +2,8 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class JuiceTask extends Task{
 
@@ -16,11 +14,9 @@ public class JuiceTask extends Task{
             for(String k: keys){
                 this.keys.add(k);
             }
-            int i = 0;
             for(String k: keys){
                 this.fileName.add(output + "_" + k + ".txt");
                 this.status.add(Commands.INCOMPLETE);
-                i+=1;
             }
         }
 
@@ -102,7 +98,7 @@ public class JuiceTask extends Task{
     public String delete;
     public String partitionMethod;
     public HashMap<InetAddress, NodesTask> nodesTaskMap = new HashMap<>();
-    private HashMap<String, Long> filesLength = new HashMap<>();
+    // private HashMap<String, Long> filesLength = new HashMap<>();
     private ArrayList<ArrayList<String>> keysDivisions = new ArrayList<>();
     public InetAddress mainIp;
     private Random rand = new Random();
