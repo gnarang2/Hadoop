@@ -28,17 +28,32 @@ public class Scheduler {
         taskList.add(task);
     }
 
+    public static void queueJuiceTask(String sdfs_intermediate_filename_prefix, String sdfs_dest_filename, String juice_exe, String num_juice, String delete, String partitionMethod) {
+        JuiceTask task = new JuiceTask(sdfs_intermediate_filename_prefix, sdfs_dest_filename, juice_exe, num_juice, delete, partitionMethod);
+        taskList.add(task);
+    }
+
 
     public static void processClientMessage(OutputStream output, String[] message){
         switch(message[0]){
-            case Commands.CM_START_MAPPLE:{
-                if(currentTask == null){
-                    try {
-                        output.write(Commands.OK.getBytes());
-                    } catch (IOException e) {
-                    }
-                    queueMappleTask(message[1], message[2], message[3], message[4]);
+            case Commands.CM_START_JUICE:{
+                try {
+                    output.write(Commands.OK.getBytes());
+                } catch (IOException e) {
                 }
+                queueJuiceTask(message[1], message[2], message[3], message[4], message[5], message[6]);
+                return;
+            }
+            case Commands.CM_JUICE_PROGRESS:{
+                //TODO
+                return;
+            }
+            case Commands.CM_START_MAPPLE:{
+                try {
+                    output.write(Commands.OK.getBytes());
+                } catch (IOException e) {
+                }
+                queueMappleTask(message[1], message[2], message[3], message[4]);
                 return;
             }
             case Commands.CM_MAPPLE_PROGRESS:{
@@ -69,10 +84,6 @@ public class Scheduler {
     }
     
 
-    public static void queueJuiceTask() {
-
-    }
-
     public static void scheduleNextTask(){
         if(taskList.size() > taskNumber+1){
             taskNumber += 1;
@@ -89,7 +100,7 @@ public class Scheduler {
 
     private static void sendSchedulerMessage(String taskType, InetAddress ip) {
         switch(taskType){
-            case Commands.DELETE_CONTENT:{
+            case Commands.MD_DELETE_CONTENT:{
                 String[] message = new String[2];
                 message[0] = Commands.MD_DELETE_CONTENT;
                 message[1] = "null";
@@ -101,11 +112,11 @@ public class Scheduler {
                 Messenger.DataNodeTCPSender(ip, message);
                 break;
             }
-            // case Commands.JUICE:{
-            //     String[] message = schedulingMessageCreator(ip);
-            //     Messenger.DataNodeTCPSender(ip, message);
-            //     break;
-            // }
+            case Commands.JUICE:{
+                String[] message = schedulingMessageCreator(ip);
+                Messenger.DataNodeTCPSender(ip, message);
+                break;
+            }
             case Commands.PROGRESS:{
                 String[] message = progressMessageCreator(ip);
                 if(message.length <= 4){
@@ -116,7 +127,7 @@ public class Scheduler {
             }
             case Commands.CONSOLIDATE:{
                 String[] message = consolidationMessageCreator();
-                if(message.length == 4){
+                if(message.length <= 4){
                     break;
                 }
                 Messenger.DataNodeTCPSender(ip, message);
@@ -133,16 +144,13 @@ public class Scheduler {
         while (true){
 
             if(currentTask == null){
+                for(MembershipList.Member member : MembershipList.getMembers()){
+                    sendSchedulerMessage(Commands.MD_DELETE_CONTENT, member.ip);    
+                }
                 scheduleNextTask();
                 flag = 0;
-                if(currentTask == null){
-                    for(MembershipList.Member member : MembershipList.getMembers()){
-                        sendSchedulerMessage(Commands.DELETE_CONTENT, member.ip);    
-                    }
-                }
             } else {
                 if(currentTask.isTaskComplete()){
-                    scheduleNextTask();
                     flag = 0;
                 } else{
                     if(!currentTask.areTasksComplete()){
@@ -185,12 +193,6 @@ public class Scheduler {
         InetAddress ip = socket.getInetAddress();
         try {
             switch (requestType) {
-                // case Commands.MD_CONSOLIDATE_CANCEL:
-                // case Commands.MD_CONSOLIDATE:{
-                //     output.write(msg);
-                //     input.read(temp); // we don't care what the node has to say
-                //     return;
-                // }
                 case Commands.MD_CONSOLIDATE:{
                     output.write(msg);
                     int n = input.read(temp);
@@ -203,8 +205,38 @@ public class Scheduler {
                     }
                     break;
                 }
-                case Commands.MD_PROGRESS_CHECK:
-                case Commands.MD_SCHEDULE_TASK:{
+                case Commands.MD_SCHEDULE_JUICE_TASK:{
+                    output.write(msg);
+                    int n = input.read(temp);
+                    if (n < 0) {
+                        return;
+                    }
+                    ack = new String(temp).substring(0, n);
+                    String[] completedKeys = ack.split("\\|");
+                    for(int i = 1; i < completedKeys.length; i+=2){
+                        String key = completedKeys[i];
+                        String status = completedKeys[i+1];
+                        currentTask.changeStatus(ip, key, status);
+                    }
+                    return;
+                }
+                case Commands.MD_JUICE_PROGRESS_CHECK:{
+                    output.write(msg);
+                    int n = input.read(temp);
+                    if (n < 0) {
+                        return;
+                    }
+                    ack = new String(temp).substring(0, n);
+                    String[] completedKeys = ack.split("\\|");
+                    for(int i = 1; i < completedKeys.length; i+=2){
+                        String key = completedKeys[i];
+                        String status = completedKeys[i+1];
+                        currentTask.changeStatus(ip, key, status);
+                    }
+                    return;
+                }
+                case Commands.MD_MAPPLE_PROGRESS_CHECK:
+                case Commands.MD_SCHEDULE_MAPLE_TASK:{
                     output.write(msg);
                     int n = input.read(temp);
                     if (n < 0) {
@@ -219,7 +251,7 @@ public class Scheduler {
                             break;
                         }
                         String status = completedIds[i+1];
-                        currentTask.changeStatus(ip, Integer.parseInt(id), status);
+                        currentTask.changeStatus(ip, id, status);
                     }
                     for(; i < completedIds.length; i++){
                         String key = completedIds[i];

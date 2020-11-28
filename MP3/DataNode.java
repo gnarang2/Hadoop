@@ -39,9 +39,31 @@ public class DataNode {
         String ack = new String();
         switch(requestType){
             case Commands.MD_DELETE_CONTENT:{
+                currentTask = null;
+                consolidateTask = null;
                 DistributedFileSystem.DataNodeFileSystem.cleanUpExecutablesFolder();
                 Client.ClientFileSystem.cleanUpExecutablesFolder();
                 output.write(Commands.OK.getBytes());
+                return;
+            }
+            case Commands.MD_JUICE_PROGRESS_CHECK:{
+                String[] taskString = Arrays.copyOfRange(message, 4, message.length);
+                ack = Commands.TASK_NOT_PRESENT;
+                if(currentTask != null){
+                    currentTask.task.introduce(taskString);
+                    ack = currentTask.task.checkCompletion();
+                }
+                output.write(ack.getBytes());
+                return;
+            }
+            case Commands.MD_SCHEDULE_JUICE_TASK:{
+                String inputFileName = fileName;
+                String outputFileName = message[2];
+                String executable = message[3];
+                String[] taskString = Arrays.copyOfRange(message, 4, message.length);
+                currentTask = new DataNodeTask(Commands.JUICE, inputFileName, outputFileName, executable, taskString);
+                ack = currentTask.task.checkCompletion();
+                output.write(ack.getBytes());
                 return;
             }
             case Commands.MP_GET_FILE:{
@@ -68,7 +90,7 @@ public class DataNode {
                 }
                 break;
             }
-            case Commands.MD_PROGRESS_CHECK:{
+            case Commands.MD_MAPPLE_PROGRESS_CHECK:{
                 if(message.length < 4){
                     ack = currentTask.task.checkCompletion();
                     output.write(ack.getBytes());
@@ -98,13 +120,10 @@ public class DataNode {
                     consolidateTask.task.introduce(taskString);
                 }
                 ack = consolidateTask.task.checkCompletion();
-                if(ack.equalsIgnoreCase(Commands.COMPLETE)){
-                    consolidateTask = null;
-                }
                 output.write(ack.getBytes());
                 break;
             }
-            case Commands.MD_SCHEDULE_TASK:{
+            case Commands.MD_SCHEDULE_MAPLE_TASK:{
                 String inputFileName = fileName;
                 String outputFileName = message[2];
                 String executable = message[3];

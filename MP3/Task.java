@@ -7,7 +7,12 @@ public abstract class Task {
     
     public String taskType;
 
-    public abstract boolean isTaskComplete();
+    public boolean isTaskComplete() {
+        if(this.status.equalsIgnoreCase(Commands.COMPLETE)){
+            return true;
+        }
+        return false;
+    }
     
     protected InetAddress selectLeastBusyNode(){
         ArrayList<InetAddress> machines = getAliveMachines();
@@ -27,7 +32,7 @@ public abstract class Task {
     public abstract boolean rescheduleNodesTask(InetAddress ip);
     public abstract boolean scheduleTask();
     public abstract Integer getNumIpTask(InetAddress ip);
-    public abstract void changeStatus(InetAddress ip, Integer uniqueID, String status);
+    public abstract void changeStatus(InetAddress ip, String id, String status);
     public abstract String getInputFileName();
     public abstract String getOutputFileName();
     

@@ -235,11 +235,11 @@ public class Messenger {
                 Master.sendDataNodeMessage(clientSocket, input, output, message);
                 break;
             }
-            // case Commands.MD_CONSOLIDATE_CANCEL:
-            // case Commands.MD_CONSOLIDATE:
-            case Commands.MD_PROGRESS_CHECK:
+            case Commands.MD_MAPPLE_PROGRESS_CHECK:
             case Commands.MD_CONSOLIDATE:
-            case Commands.MD_SCHEDULE_TASK:{
+            case Commands.MD_JUICE_PROGRESS_CHECK:
+            case Commands.MD_SCHEDULE_JUICE_TASK:
+            case Commands.MD_SCHEDULE_MAPLE_TASK:{
                 Scheduler.sendDataNodeMessage(clientSocket, input, output, message);
             }
             case Commands.DD_GET_FILE:{
@@ -427,8 +427,10 @@ class TCPThreadDataNode extends Thread{
             case Commands.MP_GET_FILE:
             case Commands.MD_CONSOLIDATE:
             case Commands.MD_DELETE_CONTENT:
-            case Commands.MD_PROGRESS_CHECK:
-            case Commands.MD_SCHEDULE_TASK:
+            case Commands.MD_MAPPLE_PROGRESS_CHECK:
+            case Commands.MD_JUICE_PROGRESS_CHECK:
+            case Commands.MD_SCHEDULE_MAPLE_TASK:
+            case Commands.MD_SCHEDULE_JUICE_TASK:
             case Commands.MD_GET_FILE:
             case Commands.DD_GET_FILE:{ // for replicating
                 try {

@@ -105,7 +105,7 @@ public class DataNodeTask {
             ArrayList<String> temp = taskDivisions.get(currId);
             while(true){
                 try {
-                    ps = new ProcessBuilder("java", "-jar", "DataNode/" + this.executable, "DataNode/Executables/" + this.inputFileName, "DataNode/Executables/" + this.outputFileName + "_" + Integer.toString(currId), this.machineNumber, temp.get(0), temp.get(1)).start();
+                    ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, "DataNode/Executables/" + this.inputFileName, "DataNode/Executables/" + this.outputFileName + "_" + Integer.toString(currId), this.machineNumber, temp.get(0), temp.get(1)).start();
                     ps.waitFor();
                     temp.set(2, "1");
                 } catch (Exception e) {
@@ -372,6 +372,131 @@ public class DataNodeTask {
 
     }
 
+    public class DataNodeJuicePreTask extends TaskMethods {
+
+        String inputFileName = new String();
+        String outputFileName = new String();
+        String executable = new String();
+        HashMap<String, ArrayList<String>> keysFileMap = new HashMap<>();
+
+        public DataNodeJuicePreTask(String inputFileName, String outputFileName, String executable, String[] taskString) {
+            this.inputFileName = inputFileName;
+            this.outputFileName = outputFileName;
+            this.executable = executable;
+            
+            for(String s: taskString){
+                if(s.equalsIgnoreCase(Commands.KEYS) || s.length() < this.inputFileName.length()){
+                    continue;
+                }
+                String key = s.substring(this.inputFileName.length()+1).split(".")[0];
+                ArrayList<String> temp = new ArrayList<>();
+                temp.add(s);
+                temp.add("0");
+                temp.add("0");
+                keysFileMap.put(key, temp);
+            }
+        }
+
+        private boolean getFile(String file){
+
+            boolean filePresent = false;
+            
+            String[] message = new String[2];
+            message[0] = Commands.CM_GET_FILE;
+            message[1] = file;
+            String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
+            if(action.length > 0 && action[0].equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
+                return filePresent;
+            }
+            message[0] = Commands.PM_GET_FILE;
+            message[1] = file;
+            InetAddress ip;
+            for (String i : action) {
+                try {
+                    ip = InetAddress.getByName(i);
+                    Messenger.ClientTCPSender(ip, message);
+                    if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(inputFileName)){
+                        filePresent = true;
+                        break;
+                    }
+                } catch (UnknownHostException e) {
+
+                }
+            }
+            return filePresent; // get file from SDFS and put it in Executables folder
+        }
+
+        public boolean getInputFile() {
+            boolean success = true;
+            for(String s: keysFileMap.keySet()){
+                if(keysFileMap.get(s).get(1).equalsIgnoreCase("1")){
+                    continue;
+                } else {
+                    if(getFile(keysFileMap.get(s).get(0))){
+                        keysFileMap.get(s).set(1, "1");
+                    } else {
+                        success = false;
+                    }
+                }
+            }
+            return success;
+        }
+
+        public boolean getExecutable() {
+            return getFile(executable); // get file from SDFS and put it in Executables folder
+        }
+
+        public void execute() {
+            Process ps;
+            for(String key: keysFileMap.keySet()){
+                ArrayList<String> temp = keysFileMap.get(key);
+                String fileName = temp.get(0);
+                
+                try {
+                    ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, "DataNode/Executables/" + fileName, "DataNode/Executables/" + this.outputFileName + "_" + key).start();
+                    ps.waitFor();
+                    temp.set(2, "1");
+                } catch (Exception e) {
+                    continue;
+                }
+            }
+        }
+
+        public String checkCompletion() {
+            String response = new String("");
+            for(String s: keysFileMap.keySet()){
+                if(keysFileMap.get(s).get(2).equalsIgnoreCase("1")){
+                    response += s + "|" + Commands.COMPLETE + "|";
+                } else {
+                    response += s + "|" + Commands.INCOMPLETE + "|";
+                }
+            }
+            return response.substring(0, response.length() - 1);
+        }
+
+        public void introduce(String[] taskList) {
+            for(String s: taskList){
+                if(s.equalsIgnoreCase(Commands.KEYS) || s.length() < this.inputFileName.length()){
+                    continue;
+                }
+                String key = s.substring(this.inputFileName.length()+1).split(".")[0];
+                if(keysFileMap.containsKey(key)){
+                    continue;
+                }
+                ArrayList<String> temp = new ArrayList<>();
+                temp.add(s);
+                temp.add("0");
+                temp.add("0");
+                keysFileMap.put(key, temp);
+            }
+        }
+
+        public String checkCompletion(String name) {
+            return null;
+        }
+
+    }
+
 
     // public void introduce(String[] taskList){
     //     task.introduce(taskList);
@@ -415,12 +540,11 @@ public class DataNodeTask {
             this.task = new DataNodeMapplePreTask(inputFileName, outputFileName, executable, taskString);
             TaskThread ft = new TaskThread(this.task);
             ft.start();
-        } 
-        // else {
-        //     task = new DataNodeJuicePreTask(inputFileName, outputFileName, executable, taskString);
-        //     TaskThread ft = new TaskThread(task);
-        //     ft.start();
-        // }
+        } else {
+            task = new DataNodeJuicePreTask(inputFileName, outputFileName, executable, taskString);
+            TaskThread ft = new TaskThread(task);
+            ft.start();
+        }
     }
 
     // public DataNodeTask(String inputFileName, String outputFileName, String[] taskString) {

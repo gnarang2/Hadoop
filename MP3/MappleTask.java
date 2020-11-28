@@ -90,14 +90,6 @@ public class MappleTask extends Task{
         }
     }
 
-    public boolean isTaskComplete(){
-        if(status.equalsIgnoreCase(Commands.COMPLETE)){
-            return true;
-        }
-        return false;
-    }
-
-
     protected void addNodesTaskToIp(NodesTask task){
         InetAddress ip = task.node;
         if(!nodesTaskMap.containsKey(ip)){
@@ -151,7 +143,8 @@ public class MappleTask extends Task{
     }
 
 
-    public void changeStatus(InetAddress ip, Integer uniqueID, String status){
+    public void changeStatus(InetAddress ip, String id, String status){
+        Integer uniqueID = Integer.parseInt(id);
         for(NodesTask task: nodesTaskMap.get(ip)){
             if(task.uniqueID == uniqueID){
                 task.status = status;
@@ -182,7 +175,7 @@ public class MappleTask extends Task{
         Integer numTasks = getNumIpTask(ip);
         ArrayList<NodesTask> list = getNodesListByIp(ip);
         String[] message = new String[4+numTasks*3];
-        message[0] = Commands.MD_SCHEDULE_TASK;
+        message[0] = Commands.MD_SCHEDULE_MAPLE_TASK;
         message[1] = getFileNames()[0];
         message[2] = getFileNames()[1];
         message[3] = getFileNames()[2];
@@ -204,7 +197,7 @@ public class MappleTask extends Task{
         Integer numTasks = getNumIpTask(ip);
         ArrayList<NodesTask> list = getNodesListByIp(ip);
         String[] message = new String[(int)4+numTasks*3];
-        message[0] = Commands.MD_PROGRESS_CHECK;
+        message[0] = Commands.MD_MAPPLE_PROGRESS_CHECK;
         message[1] = getFileNames()[0];
         message[2] = getFileNames()[1];
         message[3] = getFileNames()[2];

@@ -58,10 +58,9 @@ public class Commands {
     public static final String INCOMPLETE = "INCOMPLETE";
     public static final String COMPLETE = "COMPLETE";
     
-	public static final String MD_TEST_TASK = "TEST_TASK_DATANODE";
-	public static final String MD_SCHEDULE_TASK = "SCHEDULE_TASK_DATANODE";
-    public static final String MD_PROGRESS_CHECK = "MD_PROGRESS_CHECK";
-    public static final String DM_TASK_COMPLETE = "TASK_COMPLETE";
+	public static final String MD_SCHEDULE_MAPLE_TASK = "MD_SCHEDULE_MAPLE_TASK";
+    public static final String MD_MAPPLE_PROGRESS_CHECK = "MD_MAPPLE_PROGRESS_CHECK";
+    public static final String DM_TASK_COMPLETE = "DM_TASK_COMPLETE";
 	public static final String MAPPLE = "MAPPLE";
     public static final String JUICE = "JUICE";
     public static final String PROGRESS = "PROGRESS";
@@ -78,10 +77,13 @@ public class Commands {
 	public static final String DONE = "DONE";
 	public static final String CM_MAPPLE_PROGRESS = "CM_MAPPLE_PROGRESS";
 	public static final String MAPPLE_CONSOLIDATE = "MAPPLE_CONSOLIDATE";
-    public static final String DELETE_CONTENT = "DELETE_CONTENT";
     public static final String MD_DELETE_CONTENT = "MD_DELETE_CONTENT";
+    public static final String MD_DELETE_CONTENT_ALL = "MD_DELETE_CONTENT_ALL";
     public static final String CM_START_JUICE = "CM_START_JUICE";
-    public static Integer NUM_PUTS = 1;
+	public static final String MD_SCHEDULE_JUICE_TASK = "MD_SCHEDULE_JUICE_TASK";
+	public static final String CM_JUICE_PROGRESS = "CM_JUICE_PROGRESS";
+	public static final String MD_JUICE_PROGRESS_CHECK = "MD_JUICE_PROGRESS_CHECK";
+    public static Integer NUM_PUTS = 4;
 
     
 
