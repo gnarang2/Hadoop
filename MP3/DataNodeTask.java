@@ -211,7 +211,7 @@ public class DataNodeTask {
                 temp.add("0");
                 taskDivisions.put(Integer.parseInt(taskString[i+1]), temp);
             }
-
+            i+=1;
             for(; i < taskString.length; i+=1){
                 keyList.add(taskString[i]);
             }
@@ -241,7 +241,6 @@ public class DataNodeTask {
                 filePresent = true;
                 return filePresent;
             }
-            System.out.println("Fetching file: " + message[1]);
             String[] reply = Messenger.DataNodeTCPSender(ip, message);
             if(reply.length == 0){
                 return filePresent;
