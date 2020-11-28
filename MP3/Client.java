@@ -298,9 +298,9 @@ public class Client {
                 message[5] = "null";
                 message[6] = "null";
 
-                if (!checkMappleOperation(message)) {
-                    break;
-                }
+                // if (!checkMappleOperation(message)) {
+                //     break;
+                // }
                 
                 clientOperations(Commands.PUT, exec, exec);
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
