@@ -179,11 +179,11 @@ public class DataNodeTask {
                     return Commands.FILE_BUSY;
                 }
             }
-            if(!DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(name + ".txt")){
+            if(!DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(name)){
                 return Commands.FILE_NOT_PRESENT;
             }
             // fetch file information for name....
-            File file = new File("DataNode/Executables/" + name + ".txt");
+            File file = new File("DataNode/Executables/" + name);
             return Long.toString(file.length());
         }
 
