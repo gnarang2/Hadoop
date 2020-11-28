@@ -228,6 +228,7 @@ public class DataNodeTask {
             String machineNumber = new String();
             try {
                 if (ip.equals(InetAddress.getLocalHost())) {
+                    System.out.println("same ip");
                     return true;
                 }
                 machineNumber = MembershipList.getVMFromIp(ip).substring(3); 
@@ -262,6 +263,7 @@ public class DataNodeTask {
             Boolean returnVal = true;
             for(Integer id: taskDivisions.keySet()){
                 if(taskDivisions.get(id).get(1).equalsIgnoreCase("1")){
+                    System.out.println("offset completed......");
                     continue;
                 }
                 if(taskDivisions.containsKey(id)){
