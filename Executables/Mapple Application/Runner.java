@@ -8,6 +8,9 @@ public class Runner {
             ps = new ProcessBuilder("jar", "cfe", "mapple1.jar", "sub", "sub.class", "FileOperations.class").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
+            ps = new ProcessBuilder("cp", "mapple1.jar", "../../MP3/Client").start();
+            ps.waitFor();
+            System.out.println(ps.exitValue());
             
         } catch (Exception e){
             e.printStackTrace();

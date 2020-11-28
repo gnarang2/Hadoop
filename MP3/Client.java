@@ -265,7 +265,7 @@ public class Client {
                 if (!checkMappleOperation(message)) {
                     break;
                 }
-                message[4] = ClientFileSystem.getDivisions(Integer.parseInt(numMapples), fileName);
+                message[4] = ClientFileSystem.getDivisions(Integer.parseInt(numTasks), fileName);
                 
                 clientOperations(Commands.PUT, fileName, fileName);
                 clientOperations(Commands.PUT, exec, exec);

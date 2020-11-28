@@ -133,7 +133,7 @@ public class Commands {
                         break;
                     }
                     case JUICE:{
-                        Client.MappleJuiceOperations(split[0], "juice1.jar", "4", "output", "test.txt");
+                        Client.MappleJuiceOperations(split[0], "juice1.jar", "4", "juiceOutput", "output");
                         break;
                     }
                     case MAPPLE:{
