@@ -307,6 +307,9 @@ public class DataNodeTask {
 
         public void introduce(String[] taskList) {
             for(int i = 0; i < taskList.length; i+=2){
+                if(taskList[i].equalsIgnoreCase(Commands.KEYS)){
+                    break;
+                }
                 ArrayList<String> temp = taskDivisions.get(Integer.parseInt(taskList[i+1]));
                 if(temp.get(1).equalsIgnoreCase("0")){
                     temp.set(0, taskList[i]);
