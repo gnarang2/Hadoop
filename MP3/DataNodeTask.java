@@ -196,6 +196,7 @@ public class DataNodeTask {
         HashMap<Integer, ArrayList<String>> taskDivisions = new HashMap<>();
         String taskComplete = Commands.INCOMPLETE;
         ArrayList<String> keyList = new ArrayList<>();
+        HashSet<String> finaFiles = new HashSet<>();
         
         public DataNodeMapplePostTask(String inputFileName, String outputFileName, String[] taskString) {
             this.inputFileName = inputFileName;
@@ -228,7 +229,6 @@ public class DataNodeTask {
             String machineNumber = new String();
             try {
                 if (ip.equals(InetAddress.getLocalHost())) {
-                    System.out.println("same ip");
                     return true;
                 }
                 machineNumber = MembershipList.getVMFromIp(ip).substring(3); 
@@ -240,9 +240,7 @@ public class DataNodeTask {
             message[0] = Commands.MP_GET_FILE;
             message[1] = fileName + "_" + machineNumber + "_" + key + ".txt";
             message[2] = Integer.toString(id);
-            System.out.println("Working on file: " + message[1]);
             if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(message[1])){
-                System.out.println("File fetched....");
                 filePresent = true;
                 return filePresent;
             }
@@ -311,7 +309,8 @@ public class DataNodeTask {
 
         private void combineFiles(ArrayList<File> listOfFiles, String name){
             // delete files too.....
-            String filePath = "DataNode/Executables/" + this.outputFileName + "_" + name + ".txt"; 
+            String filePath = "DataNode/Executables/" + this.outputFileName + "_" + name + ".txt";
+            this.finaFiles.add(this.outputFileName + "_" + name + ".txt");
             File CombinedFile = new File(filePath);
             for(File file: listOfFiles){
                 addToFile(CombinedFile, file);
@@ -343,13 +342,14 @@ public class DataNodeTask {
         }
 
         private void putInSDFS(){
+            for(String file: finaFiles){
+                Client.clientOperations(Commands.PUT, "../DataNode/Executables/" + file, file);
+            }
         }
 
         public void execute() {
-            // consolidate();
-            System.out.println("Consolidated....");
-            // putInSDFS();
-            
+            consolidate();
+            putInSDFS();
             taskComplete = Commands.COMPLETE;
             
         }
