@@ -56,6 +56,7 @@ public class Scheduler {
             case Commands.CM_MAPPLE_PROGRESS:{
                 try{
                     if(currentTask == null){
+                        System.out.println("what task???");
                         output.write(Commands.OK.getBytes());
                     } else {
                         for(Task t: taskList){

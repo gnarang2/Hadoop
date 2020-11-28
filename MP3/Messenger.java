@@ -514,11 +514,7 @@ class TCPThreadClient extends Thread {
         switch(message[0]){ // parse based on who received the message
             case Commands.CM_MAPPLE_PROGRESS:
             case Commands.CM_JUICE_PROGRESS:
-            case Commands.CM_START_JUICE:{
-                for(String act: message){
-                    System.out.println("Received msg: " + act);
-                }
-            }
+            case Commands.CM_START_JUICE:
             case Commands.CM_START_MAPPLE:{
                 Scheduler.processClientMessage(output, message);
                 break;
