@@ -241,7 +241,7 @@ public class DataNodeTask {
                 filePresent = true;
                 return filePresent;
             }
-            System.out.println("Fetching file: " + fileName);
+            System.out.println("Fetching file: " + message[1]);
             String[] reply = Messenger.DataNodeTCPSender(ip, message);
             if(reply.length == 0){
                 return filePresent;
