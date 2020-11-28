@@ -240,6 +240,7 @@ public class DataNodeTask {
             message[0] = Commands.MP_GET_FILE;
             message[1] = fileName + "_" + machineNumber + "_" + key + ".txt";
             message[2] = Integer.toString(id);
+            System.out.println("Working on file: " + message[1]);
             if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
                 filePresent = true;
                 return filePresent;
@@ -263,7 +264,6 @@ public class DataNodeTask {
             Boolean returnVal = true;
             for(Integer id: taskDivisions.keySet()){
                 if(taskDivisions.get(id).get(1).equalsIgnoreCase("1")){
-                    System.out.println("offset completed......");
                     continue;
                 }
                 if(taskDivisions.containsKey(id)){
