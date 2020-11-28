@@ -77,6 +77,7 @@ public class Commands {
 	public static final String CM_START_MAPPLE = "CM_START_MAPPLE";
 	public static final String DONE = "DONE";
 	public static final String CM_MAPPLE_PROGRESS = "CM_MAPPLE_PROGRESS";
+	public static final String MAPPLE_CONSOLIDATE = "MAPPLE_CONSOLIDATE";
     public static Integer NUM_PUTS = 4;
 
     

@@ -47,10 +47,6 @@ public class MappleTask extends Task{
             this.status = Commands.STARTED;
         }
 
-        public String createFileMessage(String out){
-            return String.join("_", out, Integer.toString(uniqueID));
-        }
-
         public NodesTask clone(InetAddress ip){
             NodesTask newNode = new NodesTask(ip, this.uniqueID);
             newNode.setStartOffset(this.startOffset);
@@ -113,6 +109,9 @@ public class MappleTask extends Task{
 
     // Pick new member to reschedule the task.
     public boolean rescheduleNodesTask(InetAddress ip){
+        if(ip.equals(this.mainIp)){
+            this.mainIp = null;
+        }
         if(!minMachinesCheck()){
             return false;
         }
@@ -238,19 +237,18 @@ public class MappleTask extends Task{
     public String[] generateConsolidationMessage(){
         String[] msg = new String[1024];
         msg[0] = Commands.MD_CONSOLIDATE;
-        Integer size = 1;
+        msg[1] = getFileNames()[0];
+        msg[2] = getFileNames()[1];
+        msg[3] = getFileNames()[2];
+        Integer size = 4;
+        
         for(InetAddress ip: nodesTaskMap.keySet()){
             for(NodesTask task: nodesTaskMap.get(ip)){
-                if(!task.status.equalsIgnoreCase(Commands.COMPLETE)){
-                    return null;
-                }
                 msg[size] = ip.getHostAddress();
-                msg[size+1] = task.createFileMessage(outputFileName);
+                msg[size+1] = Integer.toString(task.uniqueID);
                 size+=2;
+                break;
             }
-        }
-        if(size == 1){
-            return null;
         }
         return Arrays.copyOfRange(msg, 0, size);
     }

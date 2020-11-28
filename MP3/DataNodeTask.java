@@ -1,4 +1,9 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -98,7 +103,7 @@ public class DataNodeTask {
             ArrayList<String> temp = taskDivisions.get(currId);
             while(true){
                 try {
-                    ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, "DataNode/Executables/" + this.inputFileName, "DataNode/Executables/" + this.outputFileName, this.machineNumber, temp.get(0), temp.get(1)).start();
+                    ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, "DataNode/Executables/" + this.inputFileName, "DataNode/Executables/" + this.outputFileName + "_" + Integer.toString(currId), this.machineNumber, temp.get(0), temp.get(1)).start();
                     ps.waitFor();
                     temp.set(2, "1");
                 } catch (Exception e) {
@@ -134,12 +139,14 @@ public class DataNodeTask {
                 if(!file.getName().substring(0, this.outputFileName.length()).equalsIgnoreCase(this.outputFileName)){
                     continue;
                 }
-                System.out.println(file.getName());
                 String[] name = file.getName().split("_");
-                if(name.length == 3){
-                    String key = name[2].substring(0, name[2].length() - 4);
-                    response += key + "|";
+                // output_id_machineNumber_key.txt
+                if(name.length == 4){
+                    String key = name[3].substring(0, name[3].length() - 4);
                     filesSet.add(key);
+                }
+                for(String k: filesSet){
+                    response += k + "|";
                 }
             }
             return response.substring(0, response.length()-1);
@@ -161,85 +168,150 @@ public class DataNodeTask {
 
     }
 
-    // public class DataNodeJuicePreTask extends TaskMethods{
+    public class DataNodeMapplePostTask extends TaskMethods{
 
-    //     public DataNodeJuicePreTask(String inputFileName, String outputFileName, String executable,
-    //             String[] taskString) {
-    //     }
-
-    //     public boolean getInputFile() {
-    //         return false;
-    //     }
-
-    //     public boolean getExecutable() {
-    //         return false;
-    //     }
-
-    //     public void execute() {
-    //     }
-
-    //     public String checkCompletion() {
-    //         return null;
-    //     }
-
-    //     public void introduce(String[] taskList) {
+        String inputFileName = new String();
+        String outputFileName = new String();
+        HashMap<Integer, ArrayList<String>> taskDivisions = new HashMap<>();
+        String machineNumber = new String();
+        String taskComplete = Commands.INCOMPLETE;
+        ArrayList<String> keyList = new ArrayList<>();
         
-    //     }
-    // }
+        public DataNodeMapplePostTask(String inputFileName, String outputFileName, String[] taskString) {
+            this.inputFileName = inputFileName;
+            this.outputFileName = outputFileName;
+            try {
+                this.machineNumber = MembershipList.getVMFromIp(InetAddress.getLocalHost()).substring(3);
+            } catch (UnknownHostException e) {
+    
+            }
+            int i = 0;
+            for(; i < taskString.length; i+=2){
+                if(taskString[i].equalsIgnoreCase(Commands.KEYS)){
+                    break;
+                }
+                ArrayList<String> temp = new ArrayList<>();
+                temp.add(taskString[i]);
+                temp.add("0");
+                taskDivisions.put(Integer.parseInt(taskString[i+1]), temp);
+            }
 
-    // public class DataNodeJuicePostTask extends TaskMethods{
+            for(; i < taskString.length; i+=1){
+                keyList.add(taskString[i]);
+            }
 
-    //     public DataNodeJuicePostTask(String inputFileName, String outputFileName,
-    //             String[] taskString) {
-    //     }
+        }
 
-    //     public boolean getInputFile() {
-    //         return false;
-    //     }
+        public String checkCompletion() {
+            return taskComplete;
+        }
 
-    //     public boolean getExecutable() {
-    //         return false;
-    //     }
+        private boolean getFile(InetAddress ip, Integer id) {
+            boolean filePresent = false;
+            String fileName = outputFileName + "_" + Integer.toString(id);
+            String[] message = new String[3];
+            message[0] = Commands.MP_GET_FILE;
+            message[1] = outputFileName;
+            message[2] = Integer.toString(id);
+            Messenger.ClientTCPSender(ip, message);
+            if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolderFile(fileName)){
+                filePresent = true;
+            }
+            return filePresent; // get file from SDFS and put it in Executables folder
+        }
 
-    //     public void execute() {
-    //     }
+        public boolean getInputFile() {
+            InetAddress ip = null;
+            Boolean returnVal = true;
+            for(Integer id: taskDivisions.keySet()){
+                if(taskDivisions.containsKey(id)){
+                    try {
+                        ip = InetAddress.getByName(taskDivisions.get(id).get(0));
+                    } catch (UnknownHostException e) {
+                        continue;
+                    }
+                    if(!getFile(ip, id)){
+                        returnVal = false;
+                    } else {
+                        taskDivisions.get(id).set(1, "1");
+                    }
+                }
+            }
+            return returnVal;
+        }
 
-    //     @Override
-    //     public String checkCompletion() {
-    //         return null;
-    //     }
+        public boolean getExecutable() {
+            return true;
+        }
 
-    //     @Override
-    //     public void introduce(String[] taskList) {
-    //     }
-    // }
+        private void addToFile(File toAddTo, File toBeAdded){
+            try {
+                FileWriter permFile = new FileWriter(toAddTo, true);
+                FileReader tempFile = new FileReader(toBeAdded);
+                BufferedWriter out = new BufferedWriter(permFile);
+                BufferedReader in = new BufferedReader(tempFile);
+                String str;
+                while ((str = in.readLine()) != null) {
+                    out.write(str);
+                }
+                in.close();
+                out.close();
+            } catch (IOException e) {
+            }
+        }
 
-    // public class DataNodeMapplePostTask extends TaskMethods{
+        private void combineFiles(ArrayList<File> listOfFiles, String name){
+            // delete files too.....
+            String filePath = "DataNode/Executables/" + this.outputFileName + "/" + name; 
+            File CombinedFile = new File(filePath);
+            for(File file: listOfFiles){
+                addToFile(CombinedFile, file);
+                file.delete();
+            }
+        }
 
-    //     public DataNodeMapplePostTask(String inputFileName, String outputFileName,
-    //             String[] taskString) {
-    //     }
+        private void consolidate(){
+            // combine all of the files based by key....
+            while(keyList.size() > 0){
+                String key = keyList.remove(0);
+                File files = new File("DataNode/Executables");
+                ArrayList<File> consolidateFiles = new ArrayList<>();
+                for(File file: files.listFiles()){
+                    String fileName = file.getName();
+                    if(fileName.length() < outputFileName.length()+key.length()+4){
+                        continue;
+                    }
+                    if(!fileName.substring(0, outputFileName.length()).equalsIgnoreCase(outputFileName)){
+                        continue;
+                    }
+                    if(!fileName.substring(fileName.length()-4-key.length(), fileName.length() - 4).equalsIgnoreCase(key)){
+                        continue;
+                    }
+                    consolidateFiles.add(file);
+                }
+                combineFiles(consolidateFiles, key);
+            }
+        }
 
-    //     public boolean getInputFile() {
-    //         return false;
-    //     }
+        public void execute() {
+            while(getInputFile()){
+                
+            }
+            consolidate();
+            taskComplete = Commands.COMPLETE;
+            
+        }
 
-    //     public boolean getExecutable() {
-    //         return true;
-    //     }
+        public void introduce(String[] taskList) {
+            for(int i = 0; i < taskList.length; i+=2){
+                ArrayList<String> temp = taskDivisions.get(Integer.parseInt(taskList[i+1]));
+                if(temp.get(1).equalsIgnoreCase("0")){
+                    temp.set(0, taskList[i]);
+                }
+            }
+        }
 
-    //     public void execute() {
-    //     }
-
-    //     @Override
-    //     public String checkCompletion() {
-    //         return null;
-    //     }
-
-    //     @Override
-    //     public void introduce(String[] taskList) {
-    //     }
-    // }
+    }
 
 
     // public void introduce(String[] taskList){
@@ -251,14 +323,32 @@ public class DataNodeTask {
     // }
     
     public boolean checkTaskType(String taskType){
-        if(taskType.equalsIgnoreCase(Commands.MAPPLE)){
+        if(taskType.equalsIgnoreCase(Commands.MAPPLE_CONSOLIDATE)){
             return true;
         } else {
             return false;
         }
     }
 
-	public DataNodeTask(String taskType, String inputFileName, String outputFileName, String executable, String[] taskString) {
+    
+    public DataNodeTask(String taskType, String inputFileName, String outputFileName, String[] taskString) {
+
+        this.input = inputFileName;
+
+        if(checkTaskType(taskType)){
+            this.task = new DataNodeMapplePostTask(inputFileName, outputFileName, taskString);
+            TaskThread ft = new TaskThread(this.task);
+            ft.start();
+        } 
+        // else {
+        //     task = new DataNodeJuicePreTask(inputFileName, outputFileName, executable, taskString);
+        //     TaskThread ft = new TaskThread(task);
+        //     ft.start();
+        // }
+    }
+
+
+    public DataNodeTask(String taskType, String inputFileName, String outputFileName, String executable, String[] taskString) {
 
         this.input = inputFileName;
 

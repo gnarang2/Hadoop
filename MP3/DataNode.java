@@ -61,6 +61,19 @@ public class DataNode {
                 output.write(ack.getBytes());
                 break;
             }
+            case Commands.MD_CONSOLIDATE:{
+                String inputFileName = fileName;
+                String outputFileName = message[2];
+                String[] taskString = Arrays.copyOfRange(message, 4, message.length);
+                // if(currentTask == null){
+                consolidateTask = new DataNodeTask(Commands.MAPPLE_CONSOLIDATE, inputFileName, outputFileName, taskString);
+                // } else {
+                //     currentTask.introduce(taskString);
+                // }
+                ack = currentTask.task.checkCompletion();
+                output.write(ack.getBytes());
+                break;
+            }
             case Commands.MD_SCHEDULE_TASK:{
                 String inputFileName = fileName;
                 String outputFileName = message[2];

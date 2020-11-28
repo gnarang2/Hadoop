@@ -11,6 +11,7 @@ public class Scheduler {
     private static Task currentTask = null;
     private static long SCHEDULER_WAIT_TIME = 2000;
     private static Integer taskNumber = -1;
+    private static Integer flag = 0;
 
 
     public static String[] schedulingMessageCreator(InetAddress ip) {
@@ -63,11 +64,7 @@ public class Scheduler {
                 }
                 return;
             }
-
-
         }
-    
-
     }
     
 
@@ -111,44 +108,44 @@ public class Scheduler {
                 Messenger.DataNodeTCPSender(ip, message);
                 break;
             }
-            // case Commands.CONSOLIDATE:{
-            //     String[] message = consolidationMessageCreator();
-            //     if(message == null){
-            //         message = new String[2];
-            //         message[0] = Commands.MD_CONSOLIDATE_CANCEL;
-            //         message[1] = currentTask.getOutputFileName();
-            //         Messenger.DataNodeTCPSender(ip, message);
-            //         break;    
-            //     }
-            //     Messenger.DataNodeTCPSender(ip, message);
-            //     break;
-            // }
+            case Commands.CONSOLIDATE:{
+                String[] message = consolidationMessageCreator();
+                if(message.length == 4){
+                    break;
+                }
+                Messenger.DataNodeTCPSender(ip, message);
+                break;
+            }
         }
     }
 
-    // private static String[] consolidationMessageCreator(){
-    //     return currentTask.generateConsolidationMessage();
-    // }
+    private static String[] consolidationMessageCreator(){
+        return currentTask.generateConsolidationMessage();
+    }
 
     public static void schedulerThread() {
         while (true){
 
             if(currentTask == null){
                 scheduleNextTask();
+                flag = 0;
             } else {
                 if(currentTask.isTaskComplete()){
                     scheduleNextTask();
+                    flag = 0;
                 } else{
                     if(!currentTask.areTasksComplete()){
                         for(InetAddress ip: currentTask.getIpList()){
                             sendSchedulerMessage(Commands.PROGRESS, ip);
                         }
                     } else {
-                        // InetAddress mainIp = currentTask.getMainIp();
-                        // if(mainIp != null){
-                        //     sendSchedulerMessage(Commands.CONSOLIDATE, mainIp);
-                        // }
-                        // currentTask = null;
+                        flag = 1;
+                    } 
+                    if(flag == 1){
+                        InetAddress mainIp = currentTask.getMainIp();
+                        if(mainIp != null){
+                            sendSchedulerMessage(Commands.CONSOLIDATE, mainIp);
+                        }
                     }
                 }
             }
@@ -183,6 +180,17 @@ public class Scheduler {
                 //     input.read(temp); // we don't care what the node has to say
                 //     return;
                 // }
+                case Commands.MD_CONSOLIDATE:{
+                    output.write(msg);
+                    int n = input.read(temp);
+                    if (n < 0) {
+                        return;
+                    }
+                    ack = new String(temp).substring(0, n);
+                    String[] completedIds = ack.split("\\|");
+                    int i;
+                    break;
+                }
                 case Commands.MD_PROGRESS_CHECK:
                 case Commands.MD_SCHEDULE_TASK:{
                     output.write(msg);
@@ -204,9 +212,7 @@ public class Scheduler {
                     for(; i < completedIds.length; i++){
                         String key = completedIds[i];
                         currentTask.keys.add(key);
-                        System.out.println(key);
                     }
-                    System.out.println(currentTask.areTasksComplete());
                     return;
                 }
                 default: {

@@ -224,7 +224,8 @@ public class Messenger {
             }
             // case Commands.MD_CONSOLIDATE_CANCEL:
             // case Commands.MD_CONSOLIDATE:
-            case Commands.MD_PROGRESS_CHECK: 
+            case Commands.MD_PROGRESS_CHECK:
+            case Commands.MD_CONSOLIDATE:
             case Commands.MD_SCHEDULE_TASK:{
                 Scheduler.sendDataNodeMessage(clientSocket, input, output, message);
             }
@@ -409,9 +410,8 @@ class TCPThreadDataNode extends Thread{
                 }
                 break;   
             }
-            case Commands.MD_CONSOLIDATE_CANCEL:
             case Commands.MD_CONSOLIDATE:
-            case Commands.MD_PROGRESS_CHECK: 
+            case Commands.MD_PROGRESS_CHECK:
             case Commands.MD_SCHEDULE_TASK:
             case Commands.MD_GET_FILE:
             case Commands.DD_GET_FILE:{ // for replicating

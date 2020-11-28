@@ -168,6 +168,16 @@ public class FileSystem {
         return false;
     }
 
+    public boolean checkExecutableFolderFile(String fileName){
+        File dir = new File(getExecutablePath());
+        for(File file: dir.listFiles()){
+            if(file.getName().substring(0, fileName.length()).equalsIgnoreCase(fileName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getExecutablePath(String fileName){
         return String.join("", this.path,"Executables/",fileName);
     }
