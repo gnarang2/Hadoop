@@ -289,7 +289,7 @@ public class Client {
             }
             case Commands.JUICE: {
                 // String delete, String partitionMethod)
-                String[] message = new String[5];
+                String[] message = new String[7];
                 message[0] = Commands.CM_START_JUICE;
                 message[1] = fileName; // contains input file
                 message[2] = sdfsIntermediateFilenamePrefix; // contains the output file
