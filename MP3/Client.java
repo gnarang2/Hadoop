@@ -304,6 +304,11 @@ public class Client {
                 
                 clientOperations(Commands.PUT, exec, exec);
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
+                
+                for(String act: action){
+                    System.out.println("Received action: " + act);
+                }
+
                 message[0]  = Commands.CM_JUICE_PROGRESS;
                 while (true) {
                     action = Messenger.ClientTCPSender(Master.masterIPAddress, message);

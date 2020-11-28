@@ -44,10 +44,6 @@ public class Scheduler {
                 queueJuiceTask(message[1], message[2], message[3], message[4], message[5], message[6]);
                 return;
             }
-            case Commands.CM_JUICE_PROGRESS:{
-                //TODO
-                return;
-            }
             case Commands.CM_START_MAPPLE:{
                 try {
                     output.write(Commands.OK.getBytes());
@@ -56,6 +52,7 @@ public class Scheduler {
                 queueMappleTask(message[1], message[2], message[3], message[4]);
                 return;
             }
+            case Commands.CM_JUICE_PROGRESS:
             case Commands.CM_MAPPLE_PROGRESS:{
                 try{
                     if(currentTask == null){
@@ -66,6 +63,8 @@ public class Scheduler {
                                 if(t.isTaskComplete()){
                                     output.write(Commands.DONE.getBytes());
                                     currentTask = null;
+                                    taskList.remove(0);
+                                    taskNumber -= 1;
                                     return;
                                 } else {
                                     output.write(Commands.OK.getBytes());
@@ -95,6 +94,8 @@ public class Scheduler {
             for(InetAddress ip: currentTask.getIpList()){
                 sendSchedulerMessage(currentTask.taskType, ip);
             }
+        } else {
+            currentTask = null;
         }
     }
 
