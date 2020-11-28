@@ -60,6 +60,7 @@ public class DataNode {
                     output.write(fileData, 0, Math.min(Messenger.MAX_MESSAGE_SIZE, (int) (fileSize - offset)));
                     offset += (long) Math.min(Messenger.MAX_MESSAGE_SIZE, (int) (fileSize - offset));
                 }
+                break;
             }
             case Commands.MD_PROGRESS_CHECK:{
                 System.out.println("Received progress checker???");
