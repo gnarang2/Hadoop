@@ -38,12 +38,29 @@ public class DataNode {
         byte[] temp = new byte[1024];
         String ack = new String();
         switch(requestType){
-            // case Commands.MD_CONSOLIDATE_CANCEL:{
-            //     break;
-            // }
-            // case Commands.MD_CONSOLIDATE:{
-            //     break;
-            // }
+            case Commands.MP_GET_FILE:{
+
+                // Write either FILE_BUSY|FILE_NOT_PRESENT
+                // OR FILE DATA....
+                ack = currentTask.task.checkCompletion(fileName);
+                if(ack.equalsIgnoreCase(Commands.FILE_BUSY) || ack.equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
+                    return;
+                }
+                output.write(ack.getBytes()); // writing FILE_SIZE
+                int n = input.read(temp);
+                if(n == -1){
+                    return;
+                }
+                // START WRITING....
+                byte[] fileData = new byte[Messenger.MAX_MESSAGE_SIZE];
+                long fileSize = Long.parseLong(ack); // return fileSize
+                long offset = 0;
+                while (offset < fileSize) {
+                    fileData = DistributedFileSystem.getFileData("Executables/" + fileName + ".txt", (int) offset);
+                    output.write(fileData, 0, Math.min(Messenger.MAX_MESSAGE_SIZE, (int) (fileSize - offset)));
+                    offset += (long) Math.min(Messenger.MAX_MESSAGE_SIZE, (int) (fileSize - offset));
+                }
+            }
             case Commands.MD_PROGRESS_CHECK:{
                 // String inputFileName = fileName;
                 // String outputFileName = message[2];
@@ -173,7 +190,6 @@ public class DataNode {
 
         switch(operation[0]){
             case Commands.PM_GET_FILE:
-            case Commands.MP_GET_FILE:
             case Commands.CD_GET_FILE:{
                 if(!DistributedFileSystem.fileFree(fileName)){
                     output.write(Commands.FILE_BUSY.getBytes());
@@ -409,9 +425,70 @@ public class DataNode {
         }
     }
 
-    public static void setUpMappleJuice(String[] message){
-        // Object obj
-        // receive object first.....
-    }
+	public static String[] sendDataNodeMappleMessage(Socket clientSocket, InputStream input, OutputStream output,
+			String[] message) throws IOException{
+        String[] reply = new String[0];
+        byte[] temp = new byte[1024];
+        String ack;
+        byte[] contents = null;
+        
+        switch(message[0]){
+            case Commands.MP_GET_FILE:{
+                output.write(String.join("|", message).getBytes());
+                int n = input.read(temp);
+                if(n < 0){
+                    return reply;
+                }
+                ack = new String(temp).substring(0, n);
+                reply = new String[1];
+                if(ack.equalsIgnoreCase(Commands.FILE_BUSY)){
+                    reply[0] = Commands.FILE_BUSY;
+                    return reply;
+                } else if(ack.equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
+                    reply[0] = Commands.FILE_NOT_PRESENT;
+                    return reply;
+                }
+                // start reading data......
+                output.write(Commands.OK.getBytes());
+                
+                Integer size = Integer.parseInt(ack.split("\\|")[0]);
+                Integer bytesRead = 0;
+                byte[] fileShard = new byte[Messenger.MAX_MESSAGE_SIZE];
+                ByteArrayOutputStream bytesStream = new ByteArrayOutputStream();
+
+                Integer off = 0;
+                Integer currentSize = 0;
+                Integer temp1 = 0;
+                String location = DistributedFileSystem.DataNodeFileSystem.generateExecutablesFolderFileName(message[1]);
+                while (bytesRead < size) {
+                    temp1 = input.readNBytes(fileShard, 0, Math.min(Messenger.MAX_MESSAGE_SIZE, size - bytesRead));
+                    bytesStream.write(fileShard);
+                    bytesRead += temp1;
+                    currentSize += temp1;
+                    if (currentSize >= 5000000) {
+                        contents = bytesStream.toByteArray();
+                        contents = Arrays.copyOf(contents, currentSize);
+                        if (!DistributedFileSystem.DataNodeFileSystem.storeDataOffset(contents, location, off)) {
+                            currentSize = 0;
+                            break;
+                        }
+                        currentSize = 0;
+                        off = 1;
+                        bytesStream.reset();
+                    }
+                }
+                if (currentSize != 0) {
+                    contents = bytesStream.toByteArray();
+                    contents = Arrays.copyOf(contents, currentSize);
+                    DistributedFileSystem.DataNodeFileSystem.storeDataOffset(contents, location, off);
+                }
+                reply[0] = Commands.OK;
+                break;
+            }
+
+
+        }
+        return reply;
+	}
 
 }

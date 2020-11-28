@@ -34,8 +34,7 @@ public class Client {
         output.write(String.join("|", message).getBytes());
 
         switch (message[0]) {
-            case Commands.MP_GET_FILE:
-            case Commands.PM_GET_FILE: {
+            case Commands.PM_GET_FILE:{
 
                 int n = input.read(temp);
                 if (n < 0) {
@@ -282,7 +281,7 @@ public class Client {
                         break;
                     }
                     try {
-                        Thread.sleep(1000); //TODO
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                     }
                 }
@@ -386,41 +385,5 @@ public class Client {
             }
         }
     }
-
-
-    // basically send it to master, which the master will send to all relevant files
-    // public static boolean createExecutable(String fileName){
-    //     fileName = fileName.split("\\.")[0];
-    //     Process ps;
-    //     String javaFile = String.join(".", fileName, "java");
-    //     String jarFile = String.join(".", fileName, "jar");
-    //     String classFile = String.join(".", fileName, "class");
-    //     ClientFileSystem.setUpExecutablesFolder();
-    //     try {
-    //         ps = new ProcessBuilder("javac", javaFile, "-d", ClientFileSystem.getExecutablePath()).start();
-    //         ps.waitFor();
-    //         if(ps.exitValue() == 1){
-    //             System.out.println("Error in .java file, check again.");
-    //         }
-    //     } catch (Exception e) {
-    //         ClientFileSystem.setUpExecutablesFolder();
-    //         return false;
-    //     }
-
-    //     try {
-    //         ps = new ProcessBuilder("jar", "cfe", ClientFileSystem.getExecutablePath(jarFile), ClientFileSystem.getExecutablePath(fileName), ClientFileSystem.getExecutablePath(classFile)).start();
-    //         ps.waitFor();
-    //         if(ps.exitValue() == 1){
-    //             System.out.println("Error in creating jar file.");
-    //         }
-    //     } catch (Exception e) {
-    //         ClientFileSystem.setUpExecutablesFolder();
-    //         return false;
-    //     }
-
-    //     FileSystem.deleteFile(ClientFileSystem.getExecutablePath(classFile));
-    //     return true;
-    // }
-
 
 }

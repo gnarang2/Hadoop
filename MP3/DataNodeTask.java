@@ -27,6 +27,8 @@ public class DataNodeTask {
         public abstract void execute();
 
         public abstract void introduce(String[] taskList);
+
+        public abstract String checkCompletion(String id);
     }
 
     public class DataNodeMapplePreTask extends TaskMethods {
@@ -166,6 +168,25 @@ public class DataNodeTask {
             }
         }
 
+        public String checkCompletion(String name) {
+            String id = name.split("_")[1];
+            Integer numID = Integer.parseInt(id);
+            if(!taskDivisions.containsKey(numID)){
+                return Commands.FILE_NOT_PRESENT;
+            }
+            for(ArrayList<String> temp: taskDivisions.values()){
+                if(temp.get(2).equalsIgnoreCase("0")){
+                    return Commands.FILE_BUSY;
+                }
+            }
+            if(!DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(name + ".txt")){
+                return Commands.FILE_NOT_PRESENT;
+            }
+            // fetch file information for name....
+            File file = new File("DataNode/Executables/" + name + ".txt");
+            return Long.toString(file.length());
+        }
+
     }
 
     public class DataNodeMapplePostTask extends TaskMethods{
@@ -173,18 +194,13 @@ public class DataNodeTask {
         String inputFileName = new String();
         String outputFileName = new String();
         HashMap<Integer, ArrayList<String>> taskDivisions = new HashMap<>();
-        String machineNumber = new String();
         String taskComplete = Commands.INCOMPLETE;
         ArrayList<String> keyList = new ArrayList<>();
         
         public DataNodeMapplePostTask(String inputFileName, String outputFileName, String[] taskString) {
             this.inputFileName = inputFileName;
             this.outputFileName = outputFileName;
-            try {
-                this.machineNumber = MembershipList.getVMFromIp(InetAddress.getLocalHost()).substring(3);
-            } catch (UnknownHostException e) {
-    
-            }
+            
             int i = 0;
             for(; i < taskString.length; i+=2){
                 if(taskString[i].equalsIgnoreCase(Commands.KEYS)){
@@ -206,21 +222,34 @@ public class DataNodeTask {
             return taskComplete;
         }
 
-        private boolean getFile(InetAddress ip, Integer id) {
+        private boolean getFile(InetAddress ip, Integer id, String key) {
+            String machineNumber = new String();
             try {
                 if (ip.equals(InetAddress.getLocalHost())) {
                     return true;
                 }
+                machineNumber = MembershipList.getVMFromIp(InetAddress.getLocalHost()).substring(3); 
             } catch (UnknownHostException e) {
             }
             boolean filePresent = false;
             String fileName = outputFileName + "_" + Integer.toString(id);
             String[] message = new String[3];
             message[0] = Commands.MP_GET_FILE;
-            message[1] = outputFileName;
+            message[1] = fileName + "_" + machineNumber + "_" + key + ".txt";
             message[2] = Integer.toString(id);
-            Messenger.ClientTCPSender(ip, message);
-            if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolderFile(fileName)){
+            if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
+                filePresent = true;
+                return filePresent;
+            }
+            String[] reply = Messenger.DataNodeTCPSender(ip, message);
+            if(reply.length == 0){
+                return filePresent;
+            }
+            if(reply[0].equalsIgnoreCase(Commands.OK)){
+                if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
+                    filePresent = true;
+                }
+            } else if (reply[0].equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
                 filePresent = true;
             }
             return filePresent; // get file from SDFS and put it in Executables folder
@@ -230,15 +259,23 @@ public class DataNodeTask {
             InetAddress ip = null;
             Boolean returnVal = true;
             for(Integer id: taskDivisions.keySet()){
+                if(taskDivisions.get(id).get(2).equalsIgnoreCase("1")){
+                    continue;
+                }
                 if(taskDivisions.containsKey(id)){
                     try {
                         ip = InetAddress.getByName(taskDivisions.get(id).get(0));
                     } catch (UnknownHostException e) {
                         continue;
                     }
-                    if(!getFile(ip, id)){
-                        returnVal = false;
-                    } else {
+                    Boolean keyValue = true;
+                    for(String key: keyList){
+                        if(!getFile(ip, id, key)){
+                            returnVal = false;
+                            keyValue = false;
+                        }
+                    }
+                    if(keyValue){
                         taskDivisions.get(id).set(1, "1");
                     }
                 }
@@ -300,8 +337,13 @@ public class DataNodeTask {
             }
         }
 
+        private void putInSDFS(){
+        }
+
         public void execute() {
             consolidate();
+            putInSDFS();
+            
             taskComplete = Commands.COMPLETE;
             
         }
@@ -316,6 +358,10 @@ public class DataNodeTask {
                     temp.set(0, taskList[i]);
                 }
             }
+        }
+
+        public String checkCompletion(String id) {
+            return null;
         }
 
     }

@@ -198,7 +198,7 @@ public class Messenger {
     }
 
 
-    public static void DataNodeTCPSender(InetAddress ip, String[] message){
+    public static String[] DataNodeTCPSender(InetAddress ip, String[] message){
         // SEND TO TCP_PORT_LISTENER_DATANODE
         Socket clientSocket=null;
         InputStream input = null;
@@ -215,9 +215,18 @@ public class Messenger {
                 e1.printStackTrace();
                 System.out.println("\n Enter a command > ");
             }
-            return;
+            return new String[0];
         }
         switch(message[0]){
+            case Commands.MP_GET_FILE:{
+                String[] reply = new String[0];
+                try {
+                    reply = DataNode.sendDataNodeMappleMessage(clientSocket, input, output, message);
+                } catch (IOException e) {
+                    return new String[0];
+                }
+                return reply;
+            }
             case Commands.MD_GET_FILE:{
                 Master.sendDataNodeMessage(clientSocket, input, output, message);
                 break;
@@ -248,6 +257,8 @@ public class Messenger {
             e.printStackTrace();
             System.out.println("\n Enter a command > ");
         } 
+
+        return new String[0];
     }
 
     public static String[] ClientTCPSender(InetAddress ip, String[] message){
@@ -288,7 +299,6 @@ public class Messenger {
                 break;
             }
             case Commands.PM_GET_FILE:
-            case Commands.MP_GET_FILE:
             case Commands.CD_GET_FILE:
             case Commands.CD_PUT_FILE:
             case Commands.CD_DELETE_FILE:
@@ -410,6 +420,7 @@ class TCPThreadDataNode extends Thread{
                 }
                 break;   
             }
+            case Commands.MP_GET_FILE:
             case Commands.MD_CONSOLIDATE:
             case Commands.MD_PROGRESS_CHECK:
             case Commands.MD_SCHEDULE_TASK:
@@ -510,7 +521,6 @@ class TCPThreadClient extends Thread {
 				}
                 break;
             }
-            case Commands.MP_GET_FILE:
             case Commands.PM_GET_FILE:
             case Commands.CD_GET_FILE:
             case Commands.CD_PUT_FILE:
