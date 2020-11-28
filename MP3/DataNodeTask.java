@@ -171,6 +171,7 @@ public class DataNodeTask {
         public String checkCompletion(String name) {
             String id = name.split("_")[1];
             Integer numID = Integer.parseInt(id);
+            System.out.println("ID is: " + id);
             if(!taskDivisions.containsKey(numID)){
                 return Commands.FILE_NOT_PRESENT;
             }

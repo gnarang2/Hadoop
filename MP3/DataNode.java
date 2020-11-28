@@ -43,6 +43,7 @@ public class DataNode {
                 // Write either FILE_BUSY|FILE_NOT_PRESENT
                 // OR FILE DATA....
                 ack = currentTask.task.checkCompletion(fileName);
+                System.out.println("File requested: " + fileName);
                 System.out.println("Status: " + ack);
                 if(ack.equalsIgnoreCase(Commands.FILE_BUSY) || ack.equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
                     return;
