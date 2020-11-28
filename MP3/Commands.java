@@ -79,8 +79,9 @@ public class Commands {
 	public static final String CM_MAPPLE_PROGRESS = "CM_MAPPLE_PROGRESS";
 	public static final String MAPPLE_CONSOLIDATE = "MAPPLE_CONSOLIDATE";
     public static final String DELETE_CONTENT = "DELETE_CONTENT";
-	public static final String MD_DELETE_CONTENT = "MD_DELETE_CONTENT";
-    public static Integer NUM_PUTS = 4;
+    public static final String MD_DELETE_CONTENT = "MD_DELETE_CONTENT";
+    public static final String CM_START_JUICE = "CM_START_JUICE";
+    public static Integer NUM_PUTS = 1;
 
     
 
