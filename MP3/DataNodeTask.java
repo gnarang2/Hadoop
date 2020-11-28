@@ -326,7 +326,7 @@ public class DataNodeTask {
     // }
     
     public boolean checkTaskType(String taskType){
-        if(taskType.equalsIgnoreCase(Commands.MAPPLE_CONSOLIDATE)){
+        if(taskType.substring(0, Commands.MAPPLE.length()).equalsIgnoreCase(Commands.MAPPLE)){
             return true;
         } else {
             return false;
