@@ -140,7 +140,7 @@ public class Scheduler {
                         }
                     } else {
                         flag = 1;
-                    } 
+                    }
                     if(flag == 1){
                         InetAddress mainIp = currentTask.getMainIp();
                         if(mainIp != null){

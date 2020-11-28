@@ -66,7 +66,11 @@ public class DataNode {
                 // String inputFileName = fileName;
                 // String outputFileName = message[2];
                 // String executable = message[3];
-                String[] taskString = Arrays.copyOfRange(message, 4, message.length);
+                for(String i: message){
+                    System.out.println(i);
+                }
+
+                String[] taskString = Arrays.copyOfRange(message, 3, message.length);
                 ack = Commands.TASK_NOT_PRESENT;
                 if(currentTask != null){
                     currentTask.task.introduce(taskString);
