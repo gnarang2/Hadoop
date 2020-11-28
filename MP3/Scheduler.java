@@ -101,7 +101,6 @@ public class Scheduler {
             // }
             case Commands.PROGRESS:{
                 String[] message = progressMessageCreator(ip);
-                System.out.println(message.length);
                 if(message.length <= 4){
                     return;
                 }
@@ -138,10 +137,8 @@ public class Scheduler {
                         for(InetAddress ip: currentTask.getIpList()){
                             sendSchedulerMessage(Commands.PROGRESS, ip);
                         }
-                        System.out.println("Sending progress message....");
                     } else {
                         flag = 1;
-                        System.out.println("Mini-tasks complete");
                     }
                     if(flag == 1){
                         InetAddress mainIp = currentTask.getMainIp();
@@ -189,6 +186,7 @@ public class Scheduler {
                         return;
                     }
                     ack = new String(temp).substring(0, n);
+                    System.out.println("Consolidate ack: " + ack);
                     if(ack.equalsIgnoreCase(Commands.COMPLETE)){
                         currentTask.status = Commands.COMPLETE;
                     }
