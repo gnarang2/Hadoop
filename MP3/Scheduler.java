@@ -56,7 +56,6 @@ public class Scheduler {
             case Commands.CM_MAPPLE_PROGRESS:{
                 try{
                     if(currentTask == null){
-                        System.out.println("what task???");
                         output.write(Commands.OK.getBytes());
                     } else {
                         for(Task t: taskList){
@@ -68,6 +67,7 @@ public class Scheduler {
                                     taskNumber -= 1;
                                     return;
                                 } else {
+                                    System.out.println("Task not completed....");
                                     output.write(Commands.OK.getBytes());
                                     return;
                                 }
