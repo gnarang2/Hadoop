@@ -199,6 +199,8 @@ public class Client {
         byte[] contents = new byte[1024];
         String temp;
         switch (message[0]) {
+            case Commands.CM_START_JUICE:
+            case Commands.CM_JUICE_PROGRESS:
             case Commands.CM_START_MAPPLE:
             case Commands.CM_MAPPLE_PROGRESS:
             case Commands.CM_GET_FILE:
@@ -303,11 +305,11 @@ public class Client {
                 // }
                 
                 clientOperations(Commands.PUT, exec, exec);
+                for(String act: message){
+                    System.out.println("Sending message: " + act);
+                }
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
                 
-                for(String act: action){
-                    System.out.println("Received action: " + act);
-                }
 
                 message[0]  = Commands.CM_JUICE_PROGRESS;
                 while (true) {
