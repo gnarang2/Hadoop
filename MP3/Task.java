@@ -56,6 +56,8 @@ public abstract class Task {
     public abstract String[] generateConsolidationMessage();
     
     public HashSet<String> keys = new HashSet<>();
+
+    public String status = Commands.INCOMPLETE;
     
 	
 

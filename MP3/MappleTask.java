@@ -60,7 +60,6 @@ public class MappleTask extends Task{
     public String inputFileName;
     public String outputFileName;
     public String executable;
-    public String status = Commands.INCOMPLETE;
     public Integer numKeys;
     private ArrayList<Long> partitions = new ArrayList<>();
     private String offsetString;
@@ -256,7 +255,7 @@ public class MappleTask extends Task{
             size+=1;
         }
 
-        
+
         return Arrays.copyOfRange(msg, 0, size);
     }
 

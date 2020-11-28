@@ -187,8 +187,9 @@ public class Scheduler {
                         return;
                     }
                     ack = new String(temp).substring(0, n);
-                    String[] completedIds = ack.split("\\|");
-                    int i;
+                    if(ack.equalsIgnoreCase(Commands.COMPLETE)){
+                        currentTask.status = Commands.COMPLETE;
+                    }
                     break;
                 }
                 case Commands.MD_PROGRESS_CHECK:
