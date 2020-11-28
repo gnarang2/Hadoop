@@ -295,8 +295,8 @@ public class Client {
                 message[2] = sdfsIntermediateFilenamePrefix; // contains the output file
                 message[3] = exec;
                 message[4] = numTasks;
-                message[5] = "null";
-                message[6] = "null";
+                message[5] = "1";
+                message[6] = "1";
 
                 // if (!checkMappleOperation(message)) {
                 //     break;
