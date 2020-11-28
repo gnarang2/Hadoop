@@ -341,8 +341,9 @@ public class DataNodeTask {
         }
 
         public void execute() {
-            consolidate();
-            putInSDFS();
+            // consolidate();
+            System.out.println("Consolidated....");
+            // putInSDFS();
             
             taskComplete = Commands.COMPLETE;
             
