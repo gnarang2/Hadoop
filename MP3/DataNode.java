@@ -62,18 +62,19 @@ public class DataNode {
                 break;
             }
             case Commands.MD_CONSOLIDATE:{
-                String inputFileName = fileName;
-                String outputFileName = message[2];
-                String[] taskString = Arrays.copyOfRange(message, 4, message.length);
-                if(consolidateTask == null){
-                    consolidateTask = new DataNodeTask(Commands.MAPPLE_CONSOLIDATE, inputFileName, outputFileName, taskString);
-                } else {
-                    consolidateTask.task.introduce(taskString);
-                }
-                ack = consolidateTask.task.checkCompletion();
-                if(ack.equalsIgnoreCase(Commands.COMPLETE)){
-                    consolidateTask = null;
-                }
+                // String inputFileName = fileName;
+                // String outputFileName = message[2];
+                // String[] taskString = Arrays.copyOfRange(message, 4, message.length);
+                // if(consolidateTask == null){
+                //     consolidateTask = new DataNodeTask(Commands.MAPPLE_CONSOLIDATE, inputFileName, outputFileName, taskString);
+                // } else {
+                //     consolidateTask.task.introduce(taskString);
+                // }
+                // ack = consolidateTask.task.checkCompletion();
+                // if(ack.equalsIgnoreCase(Commands.COMPLETE)){
+                //     consolidateTask = null;
+                // }
+                ack = Commands.INCOMPLETE;
                 output.write(ack.getBytes());
                 break;
             }
