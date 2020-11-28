@@ -251,7 +251,7 @@ public class Client {
 
     }
 
-    public static void MappleJuiceOperations(String request, String exec, String numMapples,
+    public static void MappleJuiceOperations(String request, String exec, String numTasks,
             String sdfsIntermediateFilenamePrefix, String fileName) {
 
         switch (request) {
@@ -261,7 +261,7 @@ public class Client {
                 message[1] = fileName; // contains input file
                 message[2] = sdfsIntermediateFilenamePrefix; // contains the output file
                 message[3] = exec;
-                message[4] = numMapples;
+                message[4] = numTasks;
                 if (!checkMappleOperation(message)) {
                     break;
                 }
@@ -271,6 +271,40 @@ public class Client {
                 clientOperations(Commands.PUT, exec, exec);
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
                 message[0]  = Commands.CM_MAPPLE_PROGRESS;
+                while (true) {
+                    action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
+                    if (action[0].equalsIgnoreCase(Commands.DONE)) {
+                        System.out.println("Task completed....");
+                        break;
+                    } else if (action[0].equalsIgnoreCase(Commands.TRY_AGAIN_LATER)) {
+                        System.out.println("Unexpected error occurred, output partially present.");
+                        break;
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                }
+                break;
+            }
+            case Commands.JUICE: {
+                // String delete, String partitionMethod)
+                String[] message = new String[5];
+                message[0] = Commands.CM_START_JUICE;
+                message[1] = fileName; // contains input file
+                message[2] = sdfsIntermediateFilenamePrefix; // contains the output file
+                message[3] = exec;
+                message[4] = numTasks;
+                message[5] = "null";
+                message[6] = "null";
+
+                if (!checkMappleOperation(message)) {
+                    break;
+                }
+                
+                clientOperations(Commands.PUT, exec, exec);
+                String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
+                message[0]  = Commands.CM_JUICE_PROGRESS;
                 while (true) {
                     action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
                     if (action[0].equalsIgnoreCase(Commands.DONE)) {

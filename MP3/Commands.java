@@ -132,6 +132,10 @@ public class Commands {
                         Master.printNodeInformation();
                         break;
                     }
+                    case JUICE:{
+                        Client.MappleJuiceOperations(split[0], "juice1.jar", "4", "output", "test.txt");
+                        break;
+                    }
                     case MAPPLE:{
                         // if(split.length != 5){
                         //     break;
@@ -143,7 +147,7 @@ public class Commands {
                         //     break;
                         // }
                         // Client.MappleJuiceOperations(split[0], split[1], split[2], split[3], split[4]);
-                        Client.MappleJuiceOperations(split[0], "program.jar", "4", "output", "test.txt");
+                        Client.MappleJuiceOperations(split[0], "mapple1.jar", "4", "output", "test.txt");
                         break;
                     }
                     case CM_LS:{

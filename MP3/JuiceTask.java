@@ -108,7 +108,7 @@ public class JuiceTask extends Task{
         this.outputFileName = output;
         this.inputFileName = input;
         this.executable = exec;
-        this.partitionMethod = partitionMethod;
+        // this.partitionMethod = partitionMethod;
         this.numKeys = Integer.parseInt(divisions);
 
         for(String fileName: Master.SDFS.keySet()){
