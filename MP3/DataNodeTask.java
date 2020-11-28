@@ -256,6 +256,7 @@ public class DataNodeTask {
         }
 
         public boolean getInputFile() {
+            return true;
             InetAddress ip = null;
             Boolean returnVal = true;
             for(Integer id: taskDivisions.keySet()){
