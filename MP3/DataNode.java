@@ -69,8 +69,13 @@ public class DataNode {
                 for(String i: message){
                     System.out.println(i);
                 }
+                if(message.length < 4){
+                    ack = currentTask.task.checkCompletion();
+                    output.write(ack.getBytes());
+                    break;
+                }
 
-                String[] taskString = Arrays.copyOfRange(message, 3, message.length);
+                String[] taskString = Arrays.copyOfRange(message, 4, message.length);
                 ack = Commands.TASK_NOT_PRESENT;
                 if(currentTask != null){
                     currentTask.task.introduce(taskString);
