@@ -131,7 +131,6 @@ public class Scheduler {
                 if(currentTask.isTaskComplete()){
                     scheduleNextTask();
                     flag = 0;
-                    System.out.println("In this loop...");
                 } else{
                     if(!currentTask.areTasksComplete()){
                         for(InetAddress ip: currentTask.getIpList()){
