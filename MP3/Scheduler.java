@@ -101,6 +101,7 @@ public class Scheduler {
             // }
             case Commands.PROGRESS:{
                 String[] message = progressMessageCreator(ip);
+                System.out.println(message.length);
                 if(message.length <= 4){
                     return;
                 }
