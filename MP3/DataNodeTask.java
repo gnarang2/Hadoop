@@ -241,7 +241,7 @@ public class DataNodeTask {
             message[1] = fileName + "_" + machineNumber + "_" + key + ".txt";
             message[2] = Integer.toString(id);
             System.out.println("Working on file: " + message[1]);
-            if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
+            if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(message[1])){
                 System.out.println("File fetched....");
                 filePresent = true;
                 return filePresent;
@@ -251,7 +251,7 @@ public class DataNodeTask {
                 return filePresent;
             }
             if(reply[0].equalsIgnoreCase(Commands.OK)){
-                if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
+                if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(message[1])){
                     filePresent = true;
                 }
             } else if (reply[0].equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
