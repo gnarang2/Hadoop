@@ -105,6 +105,7 @@ public class DataNodeTask {
             ArrayList<String> temp = taskDivisions.get(currId);
             while(true){
                 try {
+                    System.out.println(this.inputFileName);
                     ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, this.inputFileName, this.outputFileName + "_" + Integer.toString(currId), this.machineNumber, temp.get(0), temp.get(1)).start();
                     ps.waitFor();
                     temp.set(2, "1");
