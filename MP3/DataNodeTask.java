@@ -417,7 +417,7 @@ public class DataNodeTask {
                 try {
                     ip = InetAddress.getByName(i);
                     Messenger.ClientTCPSender(ip, message);
-                    if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(inputFileName)){
+                    if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(file)){
                         filePresent = true;
                         break;
                     }
@@ -445,7 +445,6 @@ public class DataNodeTask {
         }
 
         public boolean getExecutable() {
-            System.out.println("Trying to get executable");
             return getFile(executable); // get file from SDFS and put it in Executables folder
         }
 
