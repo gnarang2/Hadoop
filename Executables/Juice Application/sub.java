@@ -40,7 +40,7 @@ public class sub {
             if(maxCount.equals(currentCount)){
                 outputs.add(s);
                 myObj = objects.get(s);
-            } else if(currentCount > maxCount){
+            } else if(currentCount.compareTo(maxCount) > 0){
                 outputs.clear();
                 outputs.add(s);
                 myObj = objects.get(s);
