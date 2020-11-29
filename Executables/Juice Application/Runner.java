@@ -8,7 +8,10 @@ public class Runner {
             ps = new ProcessBuilder("jar", "cfe", "juice1.jar", "sub", "sub.class", "FileOperations.class").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
-            ps = new ProcessBuilder("cp", "juice1.jar", "../../MP3/Client").start();
+            // ps = new ProcessBuilder("cp", "juice1.jar", "../../MP3/Client").start();
+            // ps.waitFor();
+            // System.out.println(ps.exitValue());
+            ps = new ProcessBuilder("java", "-jar", "output_aa.txt", "juiceOutput.txt").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
 
