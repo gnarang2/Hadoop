@@ -165,12 +165,12 @@ public class JuiceTask extends Task{
             addNodesTaskToIp(tempTask);    
         }
 
-        // for(InetAddress ip: nodesTaskMap.keySet()){
-        //     System.out.println("At node: " + ip.toString());
-        //     for(String s: nodesTaskMap.get(ip).keys){
-        //         System.out.println("Keys present: " + s);
-        //     }
-        // }
+        for(InetAddress ip: nodesTaskMap.keySet()){
+            System.out.println("At node: " + ip.toString());
+            for(String s: nodesTaskMap.get(ip).keys){
+                System.out.println("Keys present: " + s);
+            }
+        }
 
 
         return true;
