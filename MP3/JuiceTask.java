@@ -142,7 +142,7 @@ public class JuiceTask extends Task{
             String key = toRemove.keys.get(0);
             toRemove.keys.remove(0);
             InetAddress newIP = selectLeastBusyNode();
-            nodesTaskMap.get(newIP).appendKey(key, this.outputFileName);
+            nodesTaskMap.get(newIP).appendKey(key, this.inputFileName);
         }
         return false;
     }
@@ -161,9 +161,10 @@ public class JuiceTask extends Task{
                 tempArray[i] = k;
                 i+=1;
             }
-            NodesTask tempTask = new NodesTask(ip, tempArray, this.outputFileName);
+            NodesTask tempTask = new NodesTask(ip, tempArray, this.inputFileName);
             addNodesTaskToIp(tempTask);    
         }
+
         return true;
     }
 
@@ -172,7 +173,7 @@ public class JuiceTask extends Task{
         InetAddress ip = task.node;
         if(nodesTaskMap.containsKey(ip)){
             for(String k: task.keys){
-                nodesTaskMap.get(ip).appendKey(k, this.outputFileName);
+                nodesTaskMap.get(ip).appendKey(k, this.inputFileName);
             }
             return;
         }
