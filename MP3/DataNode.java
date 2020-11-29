@@ -73,8 +73,6 @@ public class DataNode {
                     output.write(ack.getBytes()); // filebusy....    
                     return;
                 }
-                System.out.println("Got message to fetch files....");
-                System.out.println("To fetch: " + fileName);
                 output.write(ack.getBytes()); // writing FILE_SIZE
                 int n = input.read(temp);
                 if(n == -1){

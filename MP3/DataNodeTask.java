@@ -118,6 +118,8 @@ public class DataNodeTask {
                     filesList.get(key).fetch = true;
                 }
             }
+            System.out.println("Returning: ");
+            System.out.println(success);
             return success;            
         }
 
