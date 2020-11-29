@@ -114,9 +114,9 @@ public class JuiceTask extends Task{
         for(String fileName: Master.SDFS.keySet()){
             if(fileName.length() > this.inputFileName.length()+4){
                 if(fileName.substring(0, this.inputFileName.length()).equalsIgnoreCase(this.inputFileName)){
-                    String relevantFile = fileName.substring(this.inputFileName.length()+2);
-                    System.out.println("Relevant leftover file: " + relevantFile);
+                    String relevantFile = fileName.substring(this.inputFileName.length()+1);
                     String key = relevantFile.substring(0, relevantFile.length()-4);
+                    System.out.println("key is" + key);
                     this.keys.add(key);
                     //TODO populate filelength...
                     
@@ -126,7 +126,7 @@ public class JuiceTask extends Task{
         Integer numMachines = getAliveMachines().size();
         for(String k: this.keys){
             int idx = rand.nextInt(numMachines);
-            while(keysDivisions.size() != idx+1){
+            while(keysDivisions.size() <= idx+1){
                 keysDivisions.add(new ArrayList<>());
             }
             keysDivisions.get(idx).add(k);
