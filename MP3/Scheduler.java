@@ -215,9 +215,10 @@ public class Scheduler {
                     }
                     ack = new String(temp).substring(0, n);
                     String[] completedKeys = ack.split("\\|");
-                    for(int i = 1; i < completedKeys.length; i+=2){
+                    for(int i = 0; i < completedKeys.length; i+=2){
                         String key = completedKeys[i];
                         String status = completedKeys[i+1];
+                        System.out.println("For key: " + key + " status is: " + status);
                         currentTask.changeStatus(ip, key, status);
                     }
                     return;
