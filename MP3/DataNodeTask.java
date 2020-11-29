@@ -647,7 +647,23 @@ public class DataNodeTask {
         }
 
         public String checkCompletion(String name) {
-            return null;
+            // outputFileName + "_" + k + ".txt";
+            if(name.length() < this.outputFileName.length() + 1){
+                return Commands.FILE_NOT_PRESENT;
+            }
+            String relevantFile = name.substring(this.outputFileName.length()+1);
+            String key = relevantFile.substring(0, relevantFile.length()-4);
+            if(!keysFileMap.containsKey(key)){
+                return Commands.FILE_NOT_PRESENT;
+            }
+
+            if(keysFileMap.get(key).get(2).equalsIgnoreCase("0")){
+                return Commands.FILE_BUSY;
+            }
+
+            File file = new File("DataNode/Executables/" + name);
+            return Long.toString(file.length());
+
         }
 
     }
