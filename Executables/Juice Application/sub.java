@@ -33,7 +33,9 @@ public class sub {
         for(String s: objects.keySet()){
             temp = objects.get(s).getFileData();
             Integer currentCount = Integer.parseInt(temp[0]);
+            System.out.println(s);
             if(maxCount == currentCount){
+                System.out.println("Called");
                 outputs.add(s);
                 myObj = objects.get(s);
             } else if(currentCount > maxCount){
