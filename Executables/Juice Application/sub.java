@@ -59,6 +59,7 @@ public class sub {
             FileOperations obj = new FileOperations(inputFile, outputFile);
             juice(obj);
         } else {
+            System.out.println("In main function....");
             String outputFile = args[1];
             HashMap<String, FileOperations> objects = new HashMap<>();
             String[] files = args[2].split("\\|");
