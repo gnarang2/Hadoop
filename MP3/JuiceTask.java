@@ -155,7 +155,9 @@ public class JuiceTask extends Task{
         if(!minMachinesCheck()){
             return false;
         }
+        System.out.println("In juice schedule task");
         for(ArrayList<String> temp: keysDivisions){
+            System.out.println("Parsing array keysDivisions....");
             InetAddress ip = selectLeastBusyNode();
             String[] tempArray = new String[temp.size()];
             int i = 0;
