@@ -9,10 +9,10 @@ public class JuiceTask extends Task{
 
     public class NodesTask{
 
-        ArrayList<String> status;
+        ArrayList<String> status = new ArrayList<>();
         InetAddress node;
-        ArrayList<String> fileName;
-        ArrayList<String> keys;
+        ArrayList<String> fileName = new ArrayList<>();
+        ArrayList<String> keys = new ArrayList<>();
 
         public NodesTask(InetAddress ip, String[] kStrings, String output){
             this.node = ip;
