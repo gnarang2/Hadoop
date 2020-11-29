@@ -113,9 +113,9 @@ public class JuiceTask extends Task{
 
         for(String fileName: Master.SDFS.keySet()){
             System.out.println("Checking out master file: " + fileName);
-            if(fileName.length() > this.outputFileName.length()){
-                if(fileName.substring(0, this.outputFileName.length()).equalsIgnoreCase(this.outputFileName)){
-                    String key = fileName.substring(this.outputFileName.length()).split(".")[0];
+            if(fileName.length() > this.inputFileName.length()){
+                if(fileName.substring(0, this.inputFileName.length()).equalsIgnoreCase(this.inputFileName)){
+                    String key = fileName.substring(this.inputFileName.length()).split(".")[0];
                     //TODO populate filelength...
                     this.keys.add(key);
                 }
