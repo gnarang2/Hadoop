@@ -118,8 +118,6 @@ public class DataNodeTask {
                     filesList.get(key).fetch = true;
                 }
             }
-            System.out.println("Returning: ");
-            System.out.println(success);
             return success;            
         }
 
@@ -144,10 +142,12 @@ public class DataNodeTask {
                 files += k + "|";
             }
             files = files.substring(0, files.length()-1);
+            System.out.println("In executing: " + files);
             Process ps;
             try {
                 ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/juice1.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
+                System.out.println(ps.exitValue());
             } catch (Exception e) {
             }
             putInSDFS();
