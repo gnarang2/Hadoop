@@ -163,9 +163,9 @@ public class Scheduler {
                     }
                     if(flag == 1){
                         InetAddress mainIp = currentTask.getMainIp();
-                        if(mainIp != null){
-                            sendSchedulerMessage(Commands.CONSOLIDATE, mainIp);
-                        }
+                        // if(mainIp != null){
+                        //     sendSchedulerMessage(Commands.CONSOLIDATE, mainIp);
+                        // }
                     }
                 }
             }
