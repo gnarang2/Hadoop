@@ -92,7 +92,6 @@ public class Scheduler {
                 return;
             }
             for(InetAddress ip: currentTask.getIpList()){
-                System.out.println("Sending message to ip: " + ip.toString());
                 sendSchedulerMessage(currentTask.taskType, ip);
             }
         } else {

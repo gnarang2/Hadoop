@@ -506,28 +506,19 @@ public class DataNodeTask {
     //     return this.task.checkCompletion();
     // }
     
-    public boolean checkPreTaskType(String taskType){
-        if(taskType.equalsIgnoreCase(Commands.MD_SCHEDULE_MAPLE_TASK)){
+    public boolean checkTaskType(String taskType){
+        if(taskType.equalsIgnoreCase(Commands.MAPPLE) || taskType.equalsIgnoreCase(Commands.MAPPLE_CONSOLIDATE)){
             return true;
         } else {
             return false;
         }
     }
-
-    public boolean checkPostTaskType(String taskType){
-        if(taskType.equalsIgnoreCase(Commands.MD_CONSOLIDATE)){ //TODO
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     
     public DataNodeTask(String taskType, String inputFileName, String outputFileName, String[] taskString) {
 
         this.input = inputFileName;
 
-        if(checkPostTaskType(taskType)){
+        if(checkTaskType(taskType)){
             this.task = new DataNodeMapplePostTask(inputFileName, outputFileName, taskString);
             TaskThread ft = new TaskThread(this.task);
             ft.start();
@@ -544,7 +535,7 @@ public class DataNodeTask {
 
         this.input = inputFileName;
 
-        if(checkPreTaskType(taskType)){
+        if(checkTaskType(taskType)){
             this.task = new DataNodeMapplePreTask(inputFileName, outputFileName, executable, taskString);
             TaskThread ft = new TaskThread(this.task);
             ft.start();
