@@ -31,7 +31,6 @@ public class sub {
         FileOperations myObj = null;
 
         for(String s: objects.keySet()){
-            System.out.println(s);
             temp = objects.get(s).getFileData();
             Integer currentCount = Integer.parseInt(temp[0]);
             if(maxCount == currentCount){
@@ -63,7 +62,7 @@ public class sub {
             HashMap<String, FileOperations> objects = new HashMap<>();
             String[] files = args[2].split("\\|");
             for(String s: files){
-                objects.put(outputFile + "_" + s + ".txt", new FileOperations(outputFile + "_" + s + ".txt", outputFile));
+                objects.put(s, new FileOperations(outputFile + "_" + s + ".txt", outputFile));
             }
             juiceConsolidate(objects);
         }
