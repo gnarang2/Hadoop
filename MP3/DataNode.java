@@ -72,6 +72,7 @@ public class DataNode {
                 // OR FILE DATA....
                 ack = currentTask.task.checkCompletion(fileName);
                 if(ack.equalsIgnoreCase(Commands.FILE_BUSY) || ack.equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
+                    output.write(ack.getBytes()); // filebusy....    
                     return;
                 }
                 output.write(ack.getBytes()); // writing FILE_SIZE

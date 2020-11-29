@@ -647,7 +647,6 @@ public class DataNodeTask {
         }
 
         public String checkCompletion(String name) {
-            // outputFileName + "_" + k + ".txt";
             if(name.length() < this.outputFileName.length() + 1){
                 return Commands.FILE_NOT_PRESENT;
             }
