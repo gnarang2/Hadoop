@@ -148,11 +148,11 @@ public class DataNodeTask {
                 ps.waitFor();
             } catch (Exception e) {
             }
+            putInSDFS();
             for(String k: filesList.keySet()){
                 fileDelete("DataNode/Executables/" + this.outputFileName + "_" + k + ".txt");
                 filesList.get(k).mixed = true;
             }
-            putInSDFS();
         }
 
         public void introduce(String[] taskList) {
