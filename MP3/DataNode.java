@@ -68,13 +68,13 @@ public class DataNode {
             }
             case Commands.MP_GET_FILE:{
 
-                System.out.println("Got message to fetch files....");
-                System.out.println("To fetch: " + fileName);
                 ack = currentTask.task.checkCompletion(fileName);
                 if(ack.equalsIgnoreCase(Commands.FILE_BUSY) || ack.equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
                     output.write(ack.getBytes()); // filebusy....    
                     return;
                 }
+                System.out.println("Got message to fetch files....");
+                System.out.println("To fetch: " + fileName);
                 output.write(ack.getBytes()); // writing FILE_SIZE
                 int n = input.read(temp);
                 if(n == -1){
