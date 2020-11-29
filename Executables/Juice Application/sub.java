@@ -36,11 +36,11 @@ public class sub {
             if(maxCount == currentCount){
                 outputs.add(s);
                 myObj = objects.get(s);
-                maxCount = currentCount;
             } else if(currentCount > maxCount){
                 outputs.clear();
                 outputs.add(s);
                 myObj = objects.get(s);
+                maxCount = currentCount;
             }
         }
 
