@@ -33,6 +33,7 @@ public class sub {
         for(String s: objects.keySet()){
             temp = objects.get(s).getFileData();
             Integer currentCount = Integer.parseInt(temp[0]);
+            System.out.println(currentCount);
             if(maxCount == currentCount){
                 outputs.add(s);
                 myObj = objects.get(s);
