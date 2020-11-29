@@ -112,6 +112,7 @@ public class JuiceTask extends Task{
         this.numKeys = Integer.parseInt(divisions);
 
         for(String fileName: Master.SDFS.keySet()){
+            System.out.println("Checking out master file: " + fileName);
             if(fileName.length() > this.outputFileName.length()){
                 if(fileName.substring(0, this.outputFileName.length()).equalsIgnoreCase(this.outputFileName)){
                     String key = fileName.substring(this.outputFileName.length()).split(".")[0];
