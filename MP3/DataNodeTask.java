@@ -445,6 +445,7 @@ public class DataNodeTask {
         }
 
         public boolean getExecutable() {
+            System.out.println("Trying to get executable");
             return getFile(executable); // get file from SDFS and put it in Executables folder
         }
 
