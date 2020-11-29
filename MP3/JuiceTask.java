@@ -17,7 +17,6 @@ public class JuiceTask extends Task{
         public NodesTask(InetAddress ip, String[] kStrings, String output){
             this.node = ip;
             for(String k: kStrings){
-                System.out.println("Adding key inside nodestask");
                 this.keys.add(k);
                 this.fileName.add(output + "_" + k + ".txt");
                 this.status.add(Commands.INCOMPLETE);
@@ -166,12 +165,12 @@ public class JuiceTask extends Task{
             addNodesTaskToIp(tempTask);    
         }
 
-        for(InetAddress ip: nodesTaskMap.keySet()){
-            System.out.println("At node: " + ip.toString());
-            for(String s: nodesTaskMap.get(ip).keys){
-                System.out.println("Keys present: " + s);
-            }
-        }
+        // for(InetAddress ip: nodesTaskMap.keySet()){
+        //     System.out.println("At node: " + ip.toString());
+        //     for(String s: nodesTaskMap.get(ip).keys){
+        //         System.out.println("Keys present: " + s);
+        //     }
+        // }
 
 
         return true;
