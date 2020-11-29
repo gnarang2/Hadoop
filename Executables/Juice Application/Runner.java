@@ -11,7 +11,7 @@ public class Runner {
             // ps = new ProcessBuilder("cp", "juice1.jar", "../../MP3/Client").start();
             // ps.waitFor();
             // System.out.println(ps.exitValue());
-            ps = new ProcessBuilder("java", "-jar", "output_aa.txt", "juiceOutput.txt").start();
+            ps = new ProcessBuilder("java", "-jar", "output_aa.txt", "juiceOutput").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
 
