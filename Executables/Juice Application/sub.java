@@ -31,6 +31,7 @@ public class sub {
         FileOperations myObj = null;
 
         for(String s: objects.keySet()){
+            System.out.println(s);
             temp = objects.get(s).getFileData();
             Integer currentCount = Integer.parseInt(temp[0]);
             if(maxCount == currentCount){
