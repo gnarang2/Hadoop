@@ -144,13 +144,13 @@ public class DataNodeTask {
             files = files.substring(0, files.length()-1);
             Process ps;
             try {
-                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/*.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
+                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/juice1.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
             } catch (Exception e) {
             }
             putInSDFS();
             for(String k: filesList.keySet()){
-                fileDelete("DataNode/Executables/" + this.outputFileName + "_" + k + ".txt");
+                // fileDelete("DataNode/Executables/" + this.outputFileName + "_" + k + ".txt");
                 filesList.get(k).mixed = true;
             }
         }
