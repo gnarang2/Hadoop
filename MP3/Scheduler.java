@@ -67,7 +67,6 @@ public class Scheduler {
                                     taskNumber -= 1;
                                     return;
                                 } else {
-                                    System.out.println("Task not completed....");
                                     output.write(Commands.OK.getBytes());
                                     return;
                                 }
@@ -92,7 +91,9 @@ public class Scheduler {
                 System.out.println("\nNot enough servers to schedule task, waiting to schedule task....");
                 return;
             }
+            System.out.println("Scheduling task: " + currentTask.taskType);
             for(InetAddress ip: currentTask.getIpList()){
+                System.out.println("Sending message to ip: " + ip.toString());
                 sendSchedulerMessage(currentTask.taskType, ip);
             }
         } else {
@@ -115,7 +116,6 @@ public class Scheduler {
                 break;
             }
             case Commands.JUICE:{
-                System.out.println("Sending juice message......");
                 String[] message = schedulingMessageCreator(ip);
                 Messenger.DataNodeTCPSender(ip, message);
                 break;
@@ -210,7 +210,6 @@ public class Scheduler {
                 }
                 case Commands.MD_SCHEDULE_JUICE_TASK:
                 case Commands.MD_JUICE_PROGRESS_CHECK:{
-                    System.out.println("Scheduling juice task............");
                     output.write(msg);
                     int n = input.read(temp);
                     if (n < 0) {

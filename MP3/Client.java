@@ -305,9 +305,7 @@ public class Client {
                 // }
                 
                 clientOperations(Commands.PUT, exec, exec);
-                for(String act: message){
-                    System.out.println("Sending message: " + act);
-                }
+                
                 String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
                 
 
