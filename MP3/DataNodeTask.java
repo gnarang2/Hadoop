@@ -67,15 +67,12 @@ public class DataNodeTask {
         }
         
         public String checkCompletion() {
-            String response = "";
             for(String s: filesList.keySet()){
-                if(filesList.get(s).mixed){
-                    response += s + "|" + Commands.COMPLETE + "|";
-                } else {
-                    response += s + "|" + Commands.STARTED + "|";
+                if(!filesList.get(s).mixed){
+                    return Commands.INCOMPLETE;
                 }
             }
-            return response.substring(0, response.length()-1);
+            return Commands.COMPLETE;
         }
 
         private boolean getFile(InetAddress ip, String k){
@@ -142,12 +139,10 @@ public class DataNodeTask {
                 files += k + "|";
             }
             files = files.substring(0, files.length()-1);
-            System.out.println("In executing: " + files);
             Process ps;
             try {
                 ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/juice1.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
-                System.out.println(ps.exitValue());
             } catch (Exception e) {
             }
             putInSDFS();
