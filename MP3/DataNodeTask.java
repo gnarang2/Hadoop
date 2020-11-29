@@ -455,8 +455,12 @@ public class DataNodeTask {
                 String fileName = temp.get(0);
                 
                 try {
+                    System.out.println(fileName);
+                    System.out.println(this.outputFileName + "_" + key);
                     ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.executable, "DataNode/Executables/" + fileName, "DataNode/Executables/" + this.outputFileName + "_" + key).start();
                     ps.waitFor();
+                    System.out.println("Exit value:");
+                    System.out.println(ps.exitValue());
                     temp.set(2, "1");
                 } catch (Exception e) {
                     continue;
