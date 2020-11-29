@@ -307,7 +307,7 @@ public class JuiceTask extends Task{
 
     
     public String[] generateConsolidationMessage() {
-        String[] message = new String[5+this.keys.size()];
+        String[] message = new String[5+2*this.keys.size()];
         message[0] = Commands.MD_CONSOLIDATE;
         message[1] = getFileNames()[0];
         message[2] = getFileNames()[1];
