@@ -53,6 +53,7 @@ public class DataNode {
                     currentTask.task.introduce(taskString);
                     ack = currentTask.task.checkCompletion();
                 }
+                System.out.println("ACK: " + ack);
                 output.write(ack.getBytes());
                 return;
             }
