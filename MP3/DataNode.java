@@ -57,6 +57,9 @@ public class DataNode {
                 return;
             }
             case Commands.MD_SCHEDULE_JUICE_TASK:{
+                for(String msg: message){
+                    System.out.println("Received msg: " + msg);
+                }
                 String inputFileName = fileName;
                 String outputFileName = message[2];
                 String executable = message[3];
