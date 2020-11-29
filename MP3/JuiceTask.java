@@ -9,19 +9,20 @@ public class JuiceTask extends Task{
 
     public class NodesTask{
 
+        ArrayList<String> status;
+        InetAddress node;
+        ArrayList<String> fileName;
+        ArrayList<String> keys;
+
         public NodesTask(InetAddress ip, String[] kStrings, String output){
             this.node = ip;
             for(String k: kStrings){
+                System.out.println("Adding key inside nodestask");
                 this.keys.add(k);
                 this.fileName.add(output + "_" + k + ".txt");
                 this.status.add(Commands.INCOMPLETE);
             }
         }
-
-        ArrayList<String> status;
-        InetAddress node;
-        ArrayList<String> fileName;
-        ArrayList<String> keys;
 
         public void markComplete(String key){
             int i = 0;
@@ -125,7 +126,6 @@ public class JuiceTask extends Task{
                 keysDivisions.add(new ArrayList<>());
             }
             keysDivisions.get(idx).add(k);
-            System.out.println("adding key: " + k + " at id: " + String.valueOf(idx));
         }
     }
 
@@ -159,7 +159,6 @@ public class JuiceTask extends Task{
             String[] tempArray = new String[temp.size()];
             int i = 0;
             for(String k: temp){
-                System.out.println("Adding keys: " + k);
                 tempArray[i] = k;
                 i+=1;
             }
