@@ -112,13 +112,14 @@ public class JuiceTask extends Task{
         this.numKeys = Integer.parseInt(divisions);
 
         for(String fileName: Master.SDFS.keySet()){
-            if(fileName.length() > this.inputFileName.length()){
-                System.out.println("Checking out master file: " + fileName);
+            if(fileName.length() > this.inputFileName.length()+4){
                 if(fileName.substring(0, this.inputFileName.length()).equalsIgnoreCase(this.inputFileName)){
-                    System.out.println("Relevant leftover file: " + fileName.substring(this.inputFileName.length()));
-                    String key = fileName.substring(this.inputFileName.length()).split(".")[0];
-                    //TODO populate filelength...
+                    String relevantFile = fileName.substring(this.inputFileName.length()+2);
+                    System.out.println("Relevant leftover file: " + relevantFile);
+                    String key = relevantFile.substring(0, relevantFile.length()-4);
                     this.keys.add(key);
+                    //TODO populate filelength...
+                    
                 }
             }
         }
