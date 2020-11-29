@@ -37,12 +37,10 @@ public class sub {
             System.out.println(currentCount);
             System.out.println(maxCount);
             
-            if(maxCount == currentCount){
-                System.out.println("Current count equal to max count");
+            if(maxCount.equals(currentCount)){
                 outputs.add(s);
                 myObj = objects.get(s);
             } else if(currentCount > maxCount){
-                System.out.println("Current count greater than max count");
                 outputs.clear();
                 outputs.add(s);
                 myObj = objects.get(s);
