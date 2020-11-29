@@ -116,10 +116,7 @@ public class JuiceTask extends Task{
                 if(fileName.substring(0, this.inputFileName.length()).equalsIgnoreCase(this.inputFileName)){
                     String relevantFile = fileName.substring(this.inputFileName.length()+1);
                     String key = relevantFile.substring(0, relevantFile.length()-4);
-                    System.out.println("key is" + key);
-                    this.keys.add(key);
-                    //TODO populate filelength...
-                    
+                    this.keys.add(key);                    
                 }
             }
         }
@@ -158,9 +155,7 @@ public class JuiceTask extends Task{
         if(!minMachinesCheck()){
             return false;
         }
-        System.out.println("In juice schedule task");
         for(ArrayList<String> temp: keysDivisions){
-            System.out.println("Parsing array keysDivisions....");
             InetAddress ip = selectLeastBusyNode();
             String[] tempArray = new String[temp.size()];
             int i = 0;
@@ -171,6 +166,15 @@ public class JuiceTask extends Task{
             NodesTask tempTask = new NodesTask(ip, tempArray, this.outputFileName);
             addNodesTaskToIp(tempTask);    
         }
+
+        for(InetAddress ip: nodesTaskMap.keySet()){
+            System.out.println("At node: " + ip.toString());
+            for(String s: nodesTaskMap.get(ip).keys){
+                System.out.println("Keys present: " + s);
+            }
+        }
+
+
         return true;
     }
 
@@ -187,7 +191,12 @@ public class JuiceTask extends Task{
     }
 
     public Integer getNumIpTask(InetAddress ip) {        
-        return nodesTaskMap.get(ip).status.size();
+        if(nodesTaskMap.containsKey(ip)){
+            return nodesTaskMap.get(ip).status.size();    
+        } else {
+            return 0;
+        }
+        
     }
 
     

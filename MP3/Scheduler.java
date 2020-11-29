@@ -91,7 +91,6 @@ public class Scheduler {
                 System.out.println("\nNot enough servers to schedule task, waiting to schedule task....");
                 return;
             }
-            System.out.println("Scheduling task: " + currentTask.taskType);
             for(InetAddress ip: currentTask.getIpList()){
                 System.out.println("Sending message to ip: " + ip.toString());
                 sendSchedulerMessage(currentTask.taskType, ip);
