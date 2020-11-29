@@ -391,9 +391,6 @@ public class DataNodeTask {
                 String relevantFile = s.substring(this.inputFileName.length()+1);
                 String key = relevantFile.substring(0, relevantFile.length()-4);
                     
-                System.out.println("Looking at key: " + key);
-                System.out.println("Adding file:" + s);
-                
                 ArrayList<String> temp = new ArrayList<>();
                 temp.add(s);
                 temp.add("0");
@@ -481,10 +478,12 @@ public class DataNodeTask {
 
         public void introduce(String[] taskList) {
             for(String s: taskList){
-                if(s.equalsIgnoreCase(Commands.KEYS) || s.length() < this.inputFileName.length()){
+                if(s.equalsIgnoreCase(Commands.KEYS)){
                     continue;
                 }
-                String key = s.substring(this.inputFileName.length()+1).split(".")[0];
+                String relevantFile = s.substring(this.inputFileName.length()+1);
+                String key = relevantFile.substring(0, relevantFile.length()-4);
+                
                 if(keysFileMap.containsKey(key)){
                     continue;
                 }

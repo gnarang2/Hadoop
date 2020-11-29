@@ -218,7 +218,6 @@ public class Scheduler {
                     for(int i = 0; i < completedKeys.length; i+=2){
                         String key = completedKeys[i];
                         String status = completedKeys[i+1];
-                        System.out.println("For key: " + key + " status is: " + status);
                         currentTask.changeStatus(ip, key, status);
                     }
                     return;
