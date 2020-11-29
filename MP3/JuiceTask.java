@@ -280,7 +280,12 @@ public class JuiceTask extends Task{
     
     public InetAddress getMainIp() {
         if(mainIp == null){
-            ArrayList<InetAddress> ipList = getAliveMachines();
+            ArrayList<InetAddress> ipList = new ArrayList<>();
+            for(InetAddress ip: getAliveMachines()){
+                if(nodesTaskMap.containsKey(ip)){
+                    ipList.add(ip);
+                }
+            }
             if(ipList.size() > 0){
                 mainIp = ipList.get(this.rand.nextInt(ipList.size()));
             }
@@ -288,9 +293,38 @@ public class JuiceTask extends Task{
         return mainIp;
     }
 
+
+    private String findKey(String key){
+        for(InetAddress ip: nodesTaskMap.keySet()){
+            for(String s: nodesTaskMap.get(ip).keys){
+                if(s.equalsIgnoreCase(key)){
+                    return ip.getHostAddress();
+                }
+            }
+        }
+        return new String("");
+    }
+
     
     public String[] generateConsolidationMessage() {
-        return new String[0];
+        String[] message = new String[5+this.keys.size()];
+        message[0] = Commands.MD_CONSOLIDATE;
+        message[1] = getFileNames()[0];
+        message[2] = getFileNames()[1];
+        message[3] = getFileNames()[2];
+        message[4] = Commands.KEYS;
+        Integer i = 5;
+        for(String s: this.keys){
+            String ip = findKey(s);
+            message[i] = ip;
+            message[i+1] = s;
+            i+=2;
+        }
+        if(i == 5){
+            return new String[0];
+        }
+        message = Arrays.copyOfRange(message, 0, i);
+        return message;
     }
 
     

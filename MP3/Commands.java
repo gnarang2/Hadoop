@@ -83,6 +83,7 @@ public class Commands {
 	public static final String MD_SCHEDULE_JUICE_TASK = "MD_SCHEDULE_JUICE_TASK";
 	public static final String CM_JUICE_PROGRESS = "CM_JUICE_PROGRESS";
 	public static final String MD_JUICE_PROGRESS_CHECK = "MD_JUICE_PROGRESS_CHECK";
+	public static final String JUICE_CONSOLIDATE = "JUICE_CONSOLIDATE";
     public static Integer NUM_PUTS = 4;
 
     

@@ -113,9 +113,18 @@ public class DataNode {
             case Commands.MD_CONSOLIDATE:{
                 String inputFileName = fileName;
                 String outputFileName = message[2];
-                String[] taskString = Arrays.copyOfRange(message, 4, message.length);
+                String[] taskString = null;
+                String tempType;
+                if(currentTask.type.equalsIgnoreCase(Commands.MAPPLE)){
+                    taskString = Arrays.copyOfRange(message, 4, message.length);
+                    tempType = Commands.MAPPLE_CONSOLIDATE;
+                } else {
+                    taskString = Arrays.copyOfRange(message, 5, message.length);
+                    tempType = Commands.JUICE_CONSOLIDATE;
+                }
+                
                 if(consolidateTask == null){
-                    consolidateTask = new DataNodeTask(Commands.MAPPLE_CONSOLIDATE, inputFileName, outputFileName, taskString);
+                    consolidateTask = new DataNodeTask(tempType, inputFileName, outputFileName, taskString);
                 } else {
                     consolidateTask.task.introduce(taskString);
                 }
