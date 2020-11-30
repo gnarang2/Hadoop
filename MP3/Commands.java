@@ -153,11 +153,11 @@ public class Commands {
                         break;
                     }
                     case MAPPLE_CHARACTER_COUNT:{
-                        Client.MappleJuiceOperations(MAPPLE, "characterCountMapple.jar", "5", "characterCountOutput", "charcountdata.txt");
+                        Client.MappleJuiceOperations(MAPPLE, "characterCountMapple.jar", "5", "countOutput", "charcountdata.txt");
                         break;
                     }
                     case JUICE_CHARACTER_COUNT:{
-                        Client.MappleJuiceOperations(JUICE, "characterCountJuice.jar", "5", "characterCount", "characterCountOutput");
+                        Client.MappleJuiceOperations(JUICE, "characterCountJuice.jar", "5", "maxcount", "countOutput");
                         break;
                     }
                     case MAPPLE:{
