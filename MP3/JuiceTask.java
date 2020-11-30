@@ -93,7 +93,6 @@ public class JuiceTask extends Task{
     public String outputFileName;
     public String executable;
     public Integer numKeys;
-    public String delete;
     public String partitionMethod;
     public HashMap<InetAddress, NodesTask> nodesTaskMap = new HashMap<>();
     // private HashMap<String, Long> filesLength = new HashMap<>();
@@ -101,7 +100,7 @@ public class JuiceTask extends Task{
     public InetAddress mainIp;
     private Random rand = new Random();
     
-    public JuiceTask(String input, String output, String exec, String divisions, String delete, String partitionMethod){
+    public JuiceTask(String input, String output, String exec, String divisions, String partitionMethod){
         this.taskType = Commands.JUICE;
         this.outputFileName = output;
         this.inputFileName = input;

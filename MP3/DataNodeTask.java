@@ -122,13 +122,6 @@ public class DataNodeTask {
             return true;
         }
 
-        private void fileDelete(String name){
-            File file = new File(name);
-            if(file.exists()){
-                file.delete();
-            }
-        }
-
         private void putInSDFS(){
             Client.clientOperations(Commands.PUT, "../DataNode/Executables/" + this.outputFileName + ".txt", this.outputFileName + ".txt");
         }
@@ -147,7 +140,6 @@ public class DataNodeTask {
             }
             putInSDFS();
             for(String k: filesList.keySet()){
-                // fileDelete("DataNode/Executables/" + this.outputFileName + "_" + k + ".txt");
                 filesList.get(k).mixed = true;
             }
         }

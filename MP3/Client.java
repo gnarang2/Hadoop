@@ -291,15 +291,15 @@ public class Client {
             }
             case Commands.JUICE: {
                 // String delete, String partitionMethod)
-                String[] message = new String[7];
+                String delete;
+                String[] message = new String[6];
                 message[0] = Commands.CM_START_JUICE;
                 message[1] = fileName; // contains input file
                 message[2] = sdfsIntermediateFilenamePrefix; // contains the output file
                 message[3] = exec;
                 message[4] = numTasks;
                 message[5] = "1";
-                message[6] = "1";
-
+                
                 // if (!checkMappleOperation(message)) {
                 //     break;
                 // }
@@ -324,6 +324,11 @@ public class Client {
                     } catch (InterruptedException e) {
                     }
                 }
+
+                // if(delete.equalsIgnoreCase("1")){
+                //     //TODO.....
+                // }
+                
                 break;
             }
         }

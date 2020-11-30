@@ -29,7 +29,7 @@ public class Scheduler {
     }
 
     public static void queueJuiceTask(String sdfs_intermediate_filename_prefix, String sdfs_dest_filename, String juice_exe, String num_juice, String delete, String partitionMethod) {
-        JuiceTask task = new JuiceTask(sdfs_intermediate_filename_prefix, sdfs_dest_filename, juice_exe, num_juice, delete, partitionMethod);
+        JuiceTask task = new JuiceTask(sdfs_intermediate_filename_prefix, sdfs_dest_filename, juice_exe, num_juice, partitionMethod);
         taskList.add(task);
     }
 
