@@ -145,11 +145,11 @@ public class Commands {
                         break;
                     }
                     case MAPPLE_VOTING:{
-                        Client.MappleJuiceOperations(MAPPLE, "votingMapple.jar", "5", "votingOutput", "votingdata.txt");
+                        Client.MappleJuiceOperations(MAPPLE, "votingMapple.jar", "3", "votingOutput", "votingdata.txt");
                         break;
                     }
                     case JUICE_VOTING:{
-                        Client.MappleJuiceOperations(JUICE, "votingJuice.jar", "5", "winner", "votingOutput");
+                        Client.MappleJuiceOperations(JUICE, "votingJuice.jar", "3", "winner", "votingOutput");
                         break;
                     }
                     case MAPPLE_CHARACTER_COUNT:{
