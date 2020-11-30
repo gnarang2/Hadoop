@@ -145,19 +145,19 @@ public class Commands {
                         break;
                     }
                     case MAPPLE_VOTING:{
-                        Client.MappleJuiceOperations(MAPPLE, "votingMapple.jar", "4", "votingOutput", "votingdata.txt");
+                        Client.MappleJuiceOperations(MAPPLE, "votingMapple.jar", "5", "votingOutput", "votingdata.txt");
                         break;
                     }
                     case JUICE_VOTING:{
-                        Client.MappleJuiceOperations(JUICE, "votingJuice.jar", "4", "winner", "votingOutput");
+                        Client.MappleJuiceOperations(JUICE, "votingJuice.jar", "5", "winner", "votingOutput");
                         break;
                     }
                     case MAPPLE_CHARACTER_COUNT:{
-                        Client.MappleJuiceOperations(MAPPLE, "characterCountMapple.jar", "4", "characterCountOutput", "charcountdata.txt");
+                        Client.MappleJuiceOperations(MAPPLE, "characterCountMapple.jar", "5", "characterCountOutput", "charcountdata.txt");
                         break;
                     }
                     case JUICE_CHARACTER_COUNT:{
-                        Client.MappleJuiceOperations(JUICE, "characterCountJuice.jar", "4", "characterCount", "characterCountOutput");
+                        Client.MappleJuiceOperations(JUICE, "characterCountJuice.jar", "5", "characterCount", "characterCountOutput");
                         break;
                     }
                     case MAPPLE:{

@@ -136,6 +136,8 @@ public class DataNodeTask {
             try {
                 ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/juice1.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
+                System.out.println("Putting output in file: " + this.outputFileName);
+                System.out.println(ps.exitValue());
             } catch (Exception e) {
             }
             putInSDFS();
