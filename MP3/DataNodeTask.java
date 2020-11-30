@@ -163,8 +163,6 @@ public class DataNodeTask {
             try {
                 ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.exec, "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
-                System.out.println("Putting output in file: " + this.outputFileName);
-                System.out.println(ps.exitValue());
             } catch (Exception e) {
             }
             putInSDFS();
@@ -175,7 +173,7 @@ public class DataNodeTask {
 
         public void introduce(String[] taskList) {
             
-            for(int i = 0; i < taskList.length; i+=2){
+            for(int i = 1; i < taskList.length; i+=2){
                 if(filesList.get(taskList[i+1]).fetch){
                     continue;
                 }
