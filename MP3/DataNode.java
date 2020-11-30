@@ -60,6 +60,10 @@ public class DataNode {
                 String inputFileName = fileName;
                 String outputFileName = message[2];
                 String executable = message[3];
+                System.out.println("Scheduling juice with: ");
+                System.out.println(fileName);
+                System.out.println(outputFileName);
+                System.out.println(executable);
                 String[] taskString = Arrays.copyOfRange(message, 4, message.length);
                 currentTask = new DataNodeTask(Commands.JUICE, inputFileName, outputFileName, executable, taskString);
                 ack = currentTask.task.checkCompletion();
