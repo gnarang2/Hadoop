@@ -521,6 +521,8 @@ public class DataNodeTask {
                 if(s.equalsIgnoreCase(Commands.KEYS)){
                     continue;
                 }
+                System.out.println("Task string:");
+                System.out.println(s);
                 String relevantFile = s.substring(this.inputFileName.length()+1);
                 String key = relevantFile.substring(0, relevantFile.length()-4);
                     
