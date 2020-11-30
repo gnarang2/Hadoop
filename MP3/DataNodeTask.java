@@ -128,6 +128,18 @@ public class DataNodeTask {
         }
 
         public void execute() {
+         
+            File filesExec = new File("/DataNode/Executables/");
+            String exec = null;
+            for(File file: filesExec.listFiles()){
+                String temp = file.getName();
+                if(temp.length() > 4){
+                    temp = temp.substring(temp.length()-4);
+                    if(temp.equalsIgnoreCase(".jar")){
+                        exec = file.getName();
+                    }
+                }
+            }
             String files = "";
             for(String k: filesList.keySet()){
                 files += k + "|";
@@ -135,7 +147,7 @@ public class DataNodeTask {
             files = files.substring(0, files.length()-1);
             Process ps;
             try {
-                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/*.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
+                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + exec, "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
                 System.out.println("Putting output in file: " + this.outputFileName);
                 System.out.println(ps.exitValue());
