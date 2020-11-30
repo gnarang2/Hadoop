@@ -76,14 +76,13 @@ public class DataNodeTask {
         }
 
         private boolean getFile(InetAddress ip, String k){
+            
             boolean filePresent = false;
 
             String fileName = outputFileName + "_" + k + ".txt";
             String[] message = new String[3];
             message[0] = Commands.MP_GET_FILE;
             message[1] = fileName;
-            System.out.println("Fetching file:");
-            System.out.println(fileName);
             
             if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(fileName)){
                 filePresent = true;
@@ -121,7 +120,7 @@ public class DataNodeTask {
         }
 
         public boolean getExecutable() {
-            return false;
+            return true;
         }
 
         private void putInSDFS(){
@@ -136,7 +135,7 @@ public class DataNodeTask {
             files = files.substring(0, files.length()-1);
             Process ps;
             try {
-                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/juice1.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
+                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/*.jar", "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
                 System.out.println("Putting output in file: " + this.outputFileName);
                 System.out.println(ps.exitValue());
