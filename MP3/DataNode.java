@@ -118,10 +118,10 @@ public class DataNode {
                     taskString = Arrays.copyOfRange(message, 4, message.length);
                     tempType = Commands.MAPPLE_CONSOLIDATE;
                 } else {
-                    taskString = Arrays.copyOfRange(message, 5, message.length);
+                    taskString = Arrays.copyOfRange(message, 4, message.length);
+                    taskString[0] = message[3];
                     tempType = Commands.JUICE_CONSOLIDATE;
                 }
-                
                 if(consolidateTask == null){
                     consolidateTask = new DataNodeTask(tempType, inputFileName, outputFileName, taskString);
                 } else {

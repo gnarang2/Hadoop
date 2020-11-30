@@ -57,11 +57,12 @@ public class DataNodeTask {
         }
         String outputFileName;
         HashMap<String, NodeMap> filesList = new HashMap<>();
+        String exec;
 
         public DataNodeJuicePostTask(String outputFileName, String[] taskString) {
             this.outputFileName = outputFileName;
-            
-            for(int i = 0; i < taskString.length; i+=2){
+            this.exec = taskString[0];
+            for(int i = 1; i < taskString.length; i+=2){
                 filesList.put(taskString[i+1], new NodeMap(taskString[i], false, false));
             }
         }
@@ -120,7 +121,31 @@ public class DataNodeTask {
         }
 
         public boolean getExecutable() {
-            return true;
+            boolean filePresent = false;
+            
+            String[] message = new String[2];
+            message[0] = Commands.CM_GET_FILE;
+            message[1] = this.exec;
+            String[] action = Messenger.ClientTCPSender(Master.masterIPAddress, message);
+            if(action.length > 0 && action[0].equalsIgnoreCase(Commands.FILE_NOT_PRESENT)){
+                return filePresent;
+            }
+            message[0] = Commands.PM_GET_FILE;
+            message[1] = this.exec;
+            InetAddress ip;
+            for (String i : action) {
+                try {
+                    ip = InetAddress.getByName(i);
+                    Messenger.ClientTCPSender(ip, message);
+                    if(DistributedFileSystem.DataNodeFileSystem.checkExecutableFolder(this.exec)){
+                        filePresent = true;
+                        break;
+                    }
+                } catch (UnknownHostException e) {
+
+                }
+            }
+            return filePresent; // get file from SDFS and put it in Executables folder
         }
 
         private void putInSDFS(){
@@ -129,17 +154,6 @@ public class DataNodeTask {
 
         public void execute() {
          
-            File filesExec = new File("DataNode/Executables/");
-            String exec = null;
-            for(File file: filesExec.listFiles()){
-                String temp = file.getName();
-                if(temp.length() > 4){
-                    temp = temp.substring(temp.length()-4);
-                    if(temp.equalsIgnoreCase(".jar")){
-                        exec = file.getName();
-                    }
-                }
-            }
             String files = "";
             for(String k: filesList.keySet()){
                 files += k + "|";
@@ -147,7 +161,7 @@ public class DataNodeTask {
             files = files.substring(0, files.length()-1);
             Process ps;
             try {
-                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + exec, "1", "DataNode/Executables/" + this.outputFileName, files).start();
+                ps = new ProcessBuilder("java", "-jar", "DataNode/Executables/" + this.exec, "1", "DataNode/Executables/" + this.outputFileName, files).start();
                 ps.waitFor();
                 System.out.println("Putting output in file: " + this.outputFileName);
                 System.out.println(ps.exitValue());
