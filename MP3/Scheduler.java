@@ -28,7 +28,7 @@ public class Scheduler {
         taskList.add(task);
     }
 
-    public static void queueJuiceTask(String sdfs_intermediate_filename_prefix, String sdfs_dest_filename, String juice_exe, String num_juice, String delete, String partitionMethod) {
+    public static void queueJuiceTask(String sdfs_intermediate_filename_prefix, String sdfs_dest_filename, String juice_exe, String num_juice, String partitionMethod) {
         JuiceTask task = new JuiceTask(sdfs_intermediate_filename_prefix, sdfs_dest_filename, juice_exe, num_juice, partitionMethod);
         taskList.add(task);
     }
@@ -41,7 +41,7 @@ public class Scheduler {
                     output.write(Commands.OK.getBytes());
                 } catch (IOException e) {
                 }
-                queueJuiceTask(message[1], message[2], message[3], message[4], message[5], message[6]);
+                queueJuiceTask(message[1], message[2], message[3], message[4], message[5]);
                 return;
             }
             case Commands.CM_START_MAPPLE:{
