@@ -15,7 +15,11 @@ public class sub {
                 break;
             }
             for(String pair: temp){
-                myObj.appendFileData(new String(pair + " 1\n"), pair);
+                for(int i=0; i<pair.length();i++){
+                    char c = pair.charAt(i);
+                    String ch = Character.toString(c);
+                    myObj.appendFileData(new String(ch + " 1\n"), ch);
+                }
             }
         }
     }

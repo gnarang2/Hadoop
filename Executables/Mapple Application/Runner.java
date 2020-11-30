@@ -5,10 +5,10 @@ public class Runner {
             Process ps = new ProcessBuilder("javac", "sub.java").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
-            ps = new ProcessBuilder("jar", "cfe", "mapple1.jar", "sub", "sub.class", "FileOperations.class").start();
+            ps = new ProcessBuilder("jar", "cfe", "characterCountMapple.jar", "sub", "sub.class", "FileOperations.class").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
-            ps = new ProcessBuilder("cp", "mapple1.jar", "../../MP3/Client").start();
+            ps = new ProcessBuilder("cp", "characterCountMapple.jar", "../../MP3/Client").start();
             ps.waitFor();
             System.out.println(ps.exitValue());
             

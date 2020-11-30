@@ -84,6 +84,10 @@ public class Commands {
 	public static final String CM_JUICE_PROGRESS = "CM_JUICE_PROGRESS";
 	public static final String MD_JUICE_PROGRESS_CHECK = "MD_JUICE_PROGRESS_CHECK";
 	public static final String JUICE_CONSOLIDATE = "JUICE_CONSOLIDATE";
+    private static final String JUICE_CHARACTER_COUNT = "characterCountJuice";
+    private static final String MAPPLE_VOTING = "votingMapple";
+    private static final String JUICE_VOTING = "votingJuice";
+    private static final String MAPPLE_CHARACTER_COUNT = "characterCountMapple";
     public static Integer NUM_PUTS = 4;
 
     
@@ -134,21 +138,39 @@ public class Commands {
                         break;
                     }
                     case JUICE:{
-                        Client.MappleJuiceOperations(split[0], "juice1.jar", "4", "juiceOutput", "output");
+                        if(!checkFileName(PUT, FileSystem.changeFile(split[1]))){
+                            break;
+                        }
+                        Client.MappleJuiceOperations(split[0], split[1], split[2], split[3], split[4]);
+                        break;
+                    }
+                    case MAPPLE_VOTING:{
+                        Client.MappleJuiceOperations(MAPPLE, "votingMapple.jar", "4", "votingOutput", "votingdata.txt");
+                        break;
+                    }
+                    case JUICE_VOTING:{
+                        Client.MappleJuiceOperations(JUICE, "votingJuice.jar", "4", "winner", "votingOutput");
+                        break;
+                    }
+                    case MAPPLE_CHARACTER_COUNT:{
+                        Client.MappleJuiceOperations(MAPPLE, "characterCountMapple.jar", "4", "characterCountOutput", "charcountdata.txt");
+                        break;
+                    }
+                    case JUICE_CHARACTER_COUNT:{
+                        Client.MappleJuiceOperations(JUICE, "characterCountJuice.jar", "4", "characterCount", "characterCountOutput");
                         break;
                     }
                     case MAPPLE:{
-                        // if(split.length != 5){
-                        //     break;
-                        // }
-                        // if(!checkFileName(PUT, FileSystem.changeFile(split[1]))){
-                        //     break;
-                        // }
-                        // if(!checkFileName(PUT, FileSystem.changeFile(split[4]))){
-                        //     break;
-                        // }
-                        // Client.MappleJuiceOperations(split[0], split[1], split[2], split[3], split[4]);
-                        Client.MappleJuiceOperations(split[0], "mapple1.jar", "4", "output", "test.txt");
+                        if(split.length != 5){
+                            break;
+                        }
+                        if(!checkFileName(PUT, FileSystem.changeFile(split[1]))){
+                            break;
+                        }
+                        if(!checkFileName(PUT, FileSystem.changeFile(split[4]))){
+                            break;
+                        }
+                        Client.MappleJuiceOperations(split[0], split[1], split[2], split[3], split[4]);
                         break;
                     }
                     case CM_LS:{
