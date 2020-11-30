@@ -241,6 +241,7 @@ public class Messenger {
             case Commands.MD_SCHEDULE_JUICE_TASK:
             case Commands.MD_SCHEDULE_MAPLE_TASK:{
                 Scheduler.sendDataNodeMessage(clientSocket, input, output, message);
+                break;
             }
             case Commands.DD_GET_FILE:{
                 DataNode.sendDataNodeMessage(clientSocket, input, output, message); 

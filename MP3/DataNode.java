@@ -367,12 +367,7 @@ public class DataNode {
         String fileName = message[1];
         Integer updateCount = 0;
         
-        try{
-            for(String s: message){
-                System.out.println(s);
-            }
-            System.out.println("New");
-            
+        try{            
             output.write(String.join("|", message).getBytes());
             int n = input.read(temp);
             if(n < 0){
@@ -385,7 +380,6 @@ public class DataNode {
                 output.write(Commands.CANCEL.getBytes());
                 return;
             } else {
-                System.out.println("Received ack: " + ack);
                 updateCount = Integer.parseInt(ack.split("\\|")[1]);
                 if(updateCount < DistributedFileSystem.getCount(fileName)){
                     output.write(Commands.CANCEL.getBytes());
