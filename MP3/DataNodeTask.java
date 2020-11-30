@@ -129,7 +129,7 @@ public class DataNodeTask {
 
         public void execute() {
          
-            File filesExec = new File("/DataNode/Executables/");
+            File filesExec = new File("DataNode/Executables/");
             String exec = null;
             for(File file: filesExec.listFiles()){
                 String temp = file.getName();
