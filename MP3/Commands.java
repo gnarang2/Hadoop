@@ -84,10 +84,10 @@ public class Commands {
 	public static final String CM_JUICE_PROGRESS = "CM_JUICE_PROGRESS";
 	public static final String MD_JUICE_PROGRESS_CHECK = "MD_JUICE_PROGRESS_CHECK";
 	public static final String JUICE_CONSOLIDATE = "JUICE_CONSOLIDATE";
-    private static final String JUICE_CHARACTER_COUNT = "characterCountJuice";
-    private static final String MAPPLE_VOTING = "votingMapple";
-    private static final String JUICE_VOTING = "votingJuice";
-    private static final String MAPPLE_CHARACTER_COUNT = "characterCountMapple";
+    private static final String JUICE_CHARACTER_COUNT = "CHARACTERCOUNTJUICE";
+    private static final String MAPPLE_VOTING = "VOTINGMAPPLE";
+    private static final String JUICE_VOTING = "VOTINGJUICE";
+    private static final String MAPPLE_CHARACTER_COUNT = "CHARACTERCOUNTMAPPLE";
     public static Integer NUM_PUTS = 4;
 
     
