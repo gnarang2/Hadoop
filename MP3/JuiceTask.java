@@ -323,7 +323,8 @@ public class JuiceTask extends Task{
             return new String[0];
         }
         message = Arrays.copyOfRange(message, 0, i);
-        return message;
+        // return message;
+        return new String[0];
     }
 
     
