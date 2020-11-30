@@ -385,6 +385,7 @@ public class DataNode {
                 output.write(Commands.CANCEL.getBytes());
                 return;
             } else {
+                System.out.println("Received ack: " + ack);
                 updateCount = Integer.parseInt(ack.split("\\|")[1]);
                 if(updateCount < DistributedFileSystem.getCount(fileName)){
                     output.write(Commands.CANCEL.getBytes());
