@@ -120,9 +120,6 @@ public class Scheduler {
             }
             case Commands.PROGRESS:{
                 String[] message = progressMessageCreator(ip);
-                for(String m: message){
-                    System.out.println(m);
-                }
                 if(message.length <= 4){
                     return;
                 }

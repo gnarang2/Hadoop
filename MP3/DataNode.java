@@ -368,6 +368,11 @@ public class DataNode {
         Integer updateCount = 0;
         
         try{
+            for(String s: message){
+                System.out.println(s);
+            }
+            System.out.println("New");
+            
             output.write(String.join("|", message).getBytes());
             int n = input.read(temp);
             if(n < 0){
