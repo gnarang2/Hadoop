@@ -41,7 +41,9 @@ public class DataNode {
             case Commands.MD_DELETE_CONTENT:{
                 currentTask = null;
                 consolidateTask = null;
-                DistributedFileSystem.DataNodeFileSystem.cleanUpExecutablesFolder();
+                if(!currentTask.type.equalsIgnoreCase(Commands.JUICE)){
+                    DistributedFileSystem.DataNodeFileSystem.cleanUpExecutablesFolder();
+                }
                 Client.ClientFileSystem.cleanUpExecutablesFolder();
                 output.write(Commands.OK.getBytes());
                 return;
